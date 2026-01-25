@@ -72,13 +72,36 @@
 </header>
 
 <div class="container">
-    <div id="main-page" class="page active">
-        <div class="service-card" onclick="checkAuthAndOpen('سباكة', 'fa-droplet')"><div class="icon-box"><i class="fas fa-droplet"></i></div><h3>سباكة</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('كهرباء', 'fa-bolt-lightning')"><div class="icon-box"><i class="fas fa-bolt-lightning"></i></div><h3>كهرباء</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('تكييف', 'fa-wind')"><div class="icon-box"><i class="fas fa-wind"></i></div><h3>تكييف</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('أجهزة منزلية', 'fa-microchip')"><div class="icon-box"><i class="fas fa-microchip"></i></div><h3>أجهزة</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('نجارة وحدادة', 'fa-screwdriver-wrench')"><div class="icon-box"><i class="fas fa-screwdriver-wrench"></i></div><h3>نجارة</h3></div>
-    </div>
+    <div class="service-card" onclick="openService('سباكة', 'fa-droplet')">
+                <div class="icon-box"><i class="fas fa-droplet"></i></div><h3>سباكة</h3>
+            </div>
+            <div class="service-card" onclick="openService('كهرباء', 'fa-bolt-lightning')">
+                <div class="icon-box"><i class="fas fa-bolt-lightning"></i></div><h3>كهرباء</h3>
+            </div>
+            <div class="service-card" onclick="openService('تكييف', 'fa-wind')">
+                <div class="icon-box"><i class="fas fa-wind"></i></div><h3>تكييف</h3>
+            </div>
+            <div class="service-card" onclick="openService('أجهزة منزلية', 'fa-microchip')">
+                <div class="icon-box"><i class="fas fa-microchip"></i></div><h3>أجهزة</h3>
+            </div>
+            <div class="service-card" onclick="openService('نجارة وحدادة', 'fa-screwdriver-wrench')">
+                <div class="icon-box"><i class="fas fa-screwdriver-wrench"></i></div><h3>نجارة</h3>
+            </div>
+            <div class="service-card" onclick="openService('كاميرات', 'fa-shield-halved')">
+                <div class="icon-box"><i class="fas fa-shield-halved"></i></div><h3>كاميرات</h3>
+            </div>
+            <div class="service-card" onclick="openService('نقل', 'fa-box-open')">
+                <div class="icon-box"><i class="fas fa-box-open"></i></div><h3>نقل</h3>
+            </div>
+            <div class="service-card" onclick="openService('سيارات', 'fa-car-side')">
+                <div class="icon-box"><i class="fas fa-car-side"></i></div><h3>سيارات</h3>
+            </div>
+            <div class="service-card" onclick="openService('بناء', 'fa-layer-group')">
+                <div class="icon-box"><i class="fas fa-layer-group"></i></div><h3>بناء</h3>
+            </div>
+            <div class="service-card" onclick="openService('صبغ', 'fa-wand-magic-sparkles')">
+                <div class="icon-box"><i class="fas fa-wand-magic-sparkles"></i></div><h3>صبغ</h3>
+            </div>
 
     <div id="login-page" class="page">
         <div class="form-container">
@@ -240,3 +263,4 @@
 </script>
 </body>
 </html>
+
