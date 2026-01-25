@@ -18,128 +18,80 @@
             font-family: 'Segoe UI', system-ui, sans-serif; 
             margin: 0; padding: 0; 
             background: radial-gradient(circle at top left, #1e293b, #0f172a);
-            color: #f8fafc;
-            min-height: 100vh;
+            color: #f8fafc; min-height: 100vh;
         }
 
-        header { padding: 40px 20px 20px; text-align: center; }
-        header h1 { font-size: 2.8rem; margin: 0; font-weight: 800; }
+        header { padding: 40px 20px; text-align: center; }
+        header h1 { font-size: 2.5rem; margin: 0; font-weight: 800; }
         header h1 span { color: var(--accent); }
-        header p { opacity: 0.6; font-size: 1.1rem; margin-top: 10px; }
 
-        .container { width: 92%; max-width: 1100px; margin: 0 auto; padding-bottom: 50px; }
+        .container { width: 92%; max-width: 1100px; margin: 0 auto; }
 
-        /* شاشات النظام */
-        .page { display: none; animation: fadeIn 0.4s ease-in-out; }
+        /* شاشات التنقل */
+        .page { display: none; animation: fadeIn 0.4s ease; }
         .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* ستايل شبكة الخدمات */
+        /* شبكة الخدمات */
         #main-page { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-            gap: 20px; 
-            padding: 20px 0;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+            gap: 20px; padding: 20px 0;
         }
 
         .service-card { 
             background: var(--card-bg); backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border); border-radius: 24px; 
-            padding: 35px 15px; text-align: center; cursor: pointer; transition: 0.4s; 
+            padding: 30px 15px; text-align: center; cursor: pointer; transition: 0.3s; 
         }
-        .service-card:hover { 
-            transform: translateY(-10px); 
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        .icon-box { 
-            font-size: 2.8rem; 
-            background: linear-gradient(135deg, #fff, var(--accent));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-        }
-        .service-card h3 { margin: 0; font-size: 1.2rem; font-weight: 600; }
+        .service-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .icon-box { font-size: 2.5rem; margin-bottom: 15px; color: var(--accent); }
 
-        /* ستايل الفورمات (تسجيل ودخول وطلب) */
+        /* استايل الفورمات */
         .form-container { 
-            background: #ffffff; color: #0f172a; border-radius: 32px; padding: 40px; 
-            max-width: 480px; margin: 20px auto; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            background: #ffffff; color: #0f172a; border-radius: 28px; padding: 35px; 
+            max-width: 500px; margin: 20px auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .form-container h2 { text-align: center; margin-bottom: 25px; color: var(--dark-bg); font-weight: 800; }
-        
-        label { display: block; margin-top: 18px; font-weight: 600; color: #475569; }
+        label { display: block; margin-top: 15px; font-weight: 600; color: #334155; }
         input, textarea, select { 
-            width: 100%; padding: 15px; margin: 8px 0; border-radius: 14px; 
-            border: 2px solid #e2e8f0; background: #f8fafc; font-size: 1rem; 
-            box-sizing: border-box; outline: none; transition: 0.3s;
+            width: 100%; padding: 14px; margin: 8px 0; border-radius: 12px; 
+            border: 2px solid #e2e8f0; background: #f8fafc; box-sizing: border-box; outline: none;
         }
-        input:focus { border-color: var(--primary); background: #fff; }
-
         .btn-action { 
             background: var(--dark-bg); color: white; border: none; padding: 18px; 
-            border-radius: 16px; width: 100%; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 25px;
-            transition: 0.3s;
+            border-radius: 14px; width: 100%; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 20px;
         }
-        .btn-action:hover { opacity: 0.9; transform: translateY(-2px); }
-        .link-text { text-align: center; margin-top: 20px; cursor: pointer; color: var(--primary); font-weight: 700; }
 
-        .social-section { text-align: center; padding: 30px 0; }
-        .social-btn { 
-            text-decoration: none; color: #fff; padding: 12px 20px; border-radius: 50px; 
-            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); 
-            margin: 5px; display: inline-flex; align-items: center; gap: 10px; font-size: 0.9rem;
+        /* نافذة التسجيل المنبثقة (Modal) */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 1000;
+            justify-content: center; align-items: center;
         }
+        .modal-content { width: 90%; max-width: 400px; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .social-section { text-align: center; margin-top: 30px; }
+        .social-btn { text-decoration: none; color: #fff; padding: 10px 20px; border-radius: 50px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); margin: 5px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>خِدْماتي <span>البصرة</span></h1>
-    <p>تصفح خدماتنا.. سجل لطلب الخدمة</p>
 </header>
 
 <div class="container">
     <div id="main-page" class="page active">
-        <div class="service-card" onclick="checkAuthAndOpen('سباكة', 'fa-droplet')"><div class="icon-box"><i class="fas fa-droplet"></i></div><h3>سباكة</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('كهرباء', 'fa-bolt-lightning')"><div class="icon-box"><i class="fas fa-bolt-lightning"></i></div><h3>كهرباء</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('تكييف', 'fa-wind')"><div class="icon-box"><i class="fas fa-wind"></i></div><h3>تكييف</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('أجهزة منزلية', 'fa-microchip')"><div class="icon-box"><i class="fas fa-microchip"></i></div><h3>أجهزة</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('نجارة وحدادة', 'fa-screwdriver-wrench')"><div class="icon-box"><i class="fas fa-screwdriver-wrench"></i></div><h3>نجارة</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('كاميرات', 'fa-shield-halved')"><div class="icon-box"><i class="fas fa-shield-halved"></i></div><h3>كاميرات</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('نقل', 'fa-box-open')"><div class="icon-box"><i class="fas fa-box-open"></i></div><h3>نقل</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('سيارات', 'fa-car-side')"><div class="icon-box"><i class="fas fa-car-side"></i></div><h3>سيارات</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('بناء', 'fa-layer-group')"><div class="icon-box"><i class="fas fa-layer-group"></i></div><h3>بناء</h3></div>
-        <div class="service-card" onclick="checkAuthAndOpen('صبغ', 'fa-wand-magic-sparkles')"><div class="icon-box"><i class="fas fa-wand-magic-sparkles"></i></div><h3>صبغ</h3></div>
-    </div>
-
-    <div id="login-page" class="page">
-        <div class="form-container">
-            <h2>تسجيل الدخول</h2>
-            <label>رقم الهاتف:</label>
-            <input type="tel" id="login-phone" placeholder="07XXXXXXXXX">
-            <label>كلمة المرور:</label>
-            <input type="password" id="login-pass" placeholder="******">
-            <button class="btn-action" onclick="handleLogin()">دخول</button>
-            <p class="link-text" onclick="showPage('signup-page')">ليس لديك حساب؟ إنشاء حساب جديد</p>
-            <p class="link-text" style="color:#666" onclick="showPage('main-page')">العودة للخدمات</p>
-        </div>
-    </div>
-
-    <div id="signup-page" class="page">
-        <div class="form-container">
-            <h2>إنشاء حساب جديد</h2>
-            <label>الاسم الثلاثي (حقيقي):</label>
-            <input type="text" id="reg-name" placeholder="الاسم الأول والثاني واللقب">
-            <label>رقم الهاتف (11 رقم يبدأ بـ 07):</label>
-            <input type="tel" id="reg-phone" placeholder="07XXXXXXXXX" maxlength="11">
-            <label>عنوان السكن:</label>
-            <input type="text" id="reg-address" placeholder="البصرة / المنطقة / الشارع">
-            <label>كلمة المرور (6 رموز فأكثر):</label>
-            <input type="password" id="reg-pass" placeholder="أدخل كلمة مرور قوية">
-            <button class="btn-action" onclick="handleSignup()">تأكيد الإنشاء</button>
-            <p class="link-text" onclick="showPage('login-page')">لديك حساب؟ سجل دخولك</p>
-        </div>
+        <div class="service-card" onclick="openOrder('سباكة', 'fa-droplet')"><div class="icon-box"><i class="fas fa-droplet"></i></div><h3>سباكة</h3></div>
+        <div class="service-card" onclick="openOrder('كهرباء', 'fa-bolt-lightning')"><div class="icon-box"><i class="fas fa-bolt-lightning"></i></div><h3>كهرباء</h3></div>
+        <div class="service-card" onclick="openOrder('تكييف', 'fa-wind')"><div class="icon-box"><i class="fas fa-wind"></i></div><h3>تكييف</h3></div>
+        <div class="service-card" onclick="openOrder('أجهزة منزلية', 'fa-microchip')"><div class="icon-box"><i class="fas fa-microchip"></i></div><h3>أجهزة</h3></div>
+        <div class="service-card" onclick="openOrder('نجارة وحدادة', 'fa-screwdriver-wrench')"><div class="icon-box"><i class="fas fa-screwdriver-wrench"></i></div><h3>نجارة</h3></div>
+        <div class="service-card" onclick="openOrder('كاميرات', 'fa-shield-halved')"><div class="icon-box"><i class="fas fa-shield-halved"></i></div><h3>كاميرات</h3></div>
+        <div class="service-card" onclick="openOrder('نقل', 'fa-box-open')"><div class="icon-box"><i class="fas fa-box-open"></i></div><h3>نقل</h3></div>
+        <div class="service-card" onclick="openOrder('سيارات', 'fa-car-side')"><div class="icon-box"><i class="fas fa-car-side"></i></div><h3>سيارات</h3></div>
+        <div class="service-card" onclick="openOrder('بناء', 'fa-layer-group')"><div class="icon-box"><i class="fas fa-layer-group"></i></div><h3>بناء</h3></div>
+        <div class="service-card" onclick="openOrder('صبغ', 'fa-wand-magic-sparkles')"><div class="icon-box"><i class="fas fa-wand-magic-sparkles"></i></div><h3>صبغ</h3></div>
     </div>
 
     <div id="order-page" class="page">
@@ -147,29 +99,55 @@
             <h2 id="service-title"></h2>
             <form id="orderForm">
                 <input type="hidden" id="hidden-service">
-                <label>نوع الخدمة الفرعي:</label>
+                <label>نوع الخدمة:</label>
                 <select id="sub-service"></select>
+                <label>المنطقة في البصرة:</label>
+                <select id="user-loc" required>
+                    <option value="">اختر منطقتك...</option>
+                    <option>مركز البصرة</option><option>الزبير</option><option>شط العرب</option>
+                    <option>أبي الخصيب</option><option>القرنة</option><option>الفاو</option>
+                </select>
                 <label>وصف المشكلة:</label>
-                <textarea id="user-desc" rows="3" placeholder="اشرح لنا المشكلة بالتفصيل..." required></textarea>
+                <textarea id="user-desc" rows="3" placeholder="ما هي المشكلة التي تواجهها؟" required></textarea>
                 <button type="submit" class="btn-action" id="submitBtn">إرسال الطلب 🚀</button>
-                <button type="button" class="btn-action" style="background:#64748b" onclick="showPage('main-page')">رجوع</button>
+                <button type="button" class="btn-action" style="background:#94a3b8" onclick="showPage('main-page')">رجوع</button>
             </form>
         </div>
     </div>
+</div>
 
-    <div class="social-section">
-        <a href="https://wa.me/9647716741488" class="social-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
-        <a href="https://instagram.com/ab0nn" class="social-btn"><i class="fab fa-instagram"></i> انستقرام</a>
+<div id="auth-modal" class="modal-overlay">
+    <div id="login-box" class="modal-content form-container">
+        <h2>تسجيل الدخول أولاً</h2>
+        <input type="tel" id="login-phone" placeholder="رقم الهاتف">
+        <input type="password" id="login-pass" placeholder="كلمة المرور">
+        <button class="btn-action" onclick="handleLogin()">دخول وإرسال الطلب</button>
+        <p style="text-align:center; cursor:pointer; color:var(--primary)" onclick="toggleAuth('signup')">ليس لديك حساب؟ إنشاء حساب</p>
+        <button class="btn-action" style="background:#ef4444" onclick="closeModal()">إلغاء</button>
     </div>
+    <div id="signup-box" class="modal-content form-container" style="display:none">
+        <h2>إنشاء حساب جديد</h2>
+        <input type="text" id="reg-name" placeholder="الاسم الثلاثي الحقيقي">
+        <input type="tel" id="reg-phone" placeholder="رقم الهاتف (يبدأ بـ 07)" maxlength="11">
+        <input type="text" id="reg-address" placeholder="عنوان السكن بالتفصيل">
+        <input type="password" id="reg-pass" placeholder="كلمة المرور (6+ رموز)">
+        <button class="btn-action" onclick="handleSignup()">تأكيد الإنشاء والدخول</button>
+        <p style="text-align:center; cursor:pointer; color:var(--primary)" onclick="toggleAuth('login')">لديك حساب؟ تسجيل دخول</p>
+    </div>
+</div>
+
+<div class="social-section">
+    <a href="https://wa.me/9647716741488" class="social-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
+    <a href="https://instagram.com/ab0nn" class="social-btn"><i class="fab fa-instagram"></i> انستقرام</a>
 </div>
 
 <script>
     const subServices = { 
         'سباكة': ['تأسيس مياه', 'تصليح مضخات', 'تنظيف مجاري'], 'كهرباء': ['تأسيس منازل', 'تصليح بوردات'],
-        'تكييف': ['غسل سبلت', 'شحن غاز', 'نصب وفك'], 'أجهزة منزلية': ['غسالات', 'ثلاجات', 'طباخات'],
-        'نجارة وحدادة': ['تصليح أثاث', 'لحام حديد'], 'كاميرات': ['نصب منظومة', 'برمجة DVR'],
-        'نقل': ['نقل أثاث', 'سيارات حمل'], 'سيارات': ['كهرباء سيارات', 'ميكانيك'],
-        'بناء': ['ترميم منازل', 'سيراميك'], 'صبغ': ['صبغ داخلي', 'ورق جدران']
+        'تكييف': ['غسل سبلت', 'شحن غاز'], 'أجهزة منزلية': ['غسالات', 'ثلاجات'],
+        'نجارة وحدادة': ['تصليح أثاث', 'لحام حديد'], 'كاميرات': ['نصب كاميرات', 'برمجة DVR'],
+        'نقل': ['نقل أثاث', 'توصيل'], 'سيارات': ['كهرباء', 'ميكانيك'],
+        'بناء': ['ترميم', 'سيراميك'], 'صبغ': ['صبغ داخلي', 'ديكورات']
     };
 
     function showPage(pageId) {
@@ -177,43 +155,50 @@
         document.getElementById(pageId).classList.add('active');
     }
 
-    // القاعدة الأساسية: التحقق من الدخول عند الضغط على الخدمة
-    function checkAuthAndOpen(name, icon) {
-        const user = localStorage.getItem('loggedUser');
-        if (!user) {
-            alert("⚠️ تنبيه: يجب تسجيل الدخول أولاً لتتمكن من طلب الخدمة.");
-            showPage('login-page');
-        } else {
-            openOrder(name, icon);
-        }
-    }
-
     function openOrder(name, icon) {
         showPage('order-page');
-        document.getElementById('service-title').innerText = "طلب: " + name;
+        document.getElementById('service-title').innerText = "طلب خدمة " + name;
         document.getElementById('hidden-service').value = name;
         const subSelect = document.getElementById('sub-service'); 
         subSelect.innerHTML = subServices[name].map(s => `<option>${s}</option>`).join('');
     }
 
-    // معالجة إنشاء الحساب
-    function handleSignup() {
-        const name = document.getElementById('reg-name').value.trim();
-        const phone = document.getElementById('reg-phone').value.trim();
-        const address = document.getElementById('reg-address').value.trim();
-        const pass = document.getElementById('reg-pass').value;
+    // منطق الإرسال الذكي
+    document.getElementById("orderForm").onsubmit = function(e) {
+        e.preventDefault();
+        const user = localStorage.getItem('loggedUser');
+        if (!user) {
+            document.getElementById('auth-modal').style.display = 'flex';
+        } else {
+            finalSend();
+        }
+    };
 
-        if (name.split(' ').length < 3) return alert("الرجاء إدخال الاسم الثلاثي.");
-        if (phone.length !== 11 || !phone.startsWith("07")) return alert("الرقم غير صحيح (يجب 11 رقم ويبدأ بـ 07).");
-        if (address.length < 5) return alert("الرجاء كتابة العنوان كاملاً.");
-        if (pass.length < 6) return alert("كلمة المرور قصيرة جداً.");
+    function closeModal() { document.getElementById('auth-modal').style.display = 'none'; }
 
-        localStorage.setItem('user_' + phone, JSON.stringify({name, phone, address, pass}));
-        alert("✅ تم إنشاء حسابك! يمكنك الدخول الآن.");
-        showPage('login-page');
+    function toggleAuth(type) {
+        document.getElementById('login-box').style.display = type === 'login' ? 'block' : 'none';
+        document.getElementById('signup-box').style.display = type === 'signup' ? 'block' : 'none';
     }
 
-    // معالجة تسجيل الدخول
+    function handleSignup() {
+        const name = document.getElementById('reg-name').value;
+        const phone = document.getElementById('reg-phone').value;
+        const address = document.getElementById('reg-address').value;
+        const pass = document.getElementById('reg-pass').value;
+
+        if (name.split(' ').length < 3) return alert("يرجى إدخال الاسم الثلاثي.");
+        if (phone.length !== 11 || !phone.startsWith("07")) return alert("الرقم غير صحيح.");
+        if (pass.length < 6) return alert("كلمة المرور ضعيفة.");
+
+        const user = { name, phone, address, pass };
+        localStorage.setItem('user_' + phone, JSON.stringify(user));
+        localStorage.setItem('loggedUser', JSON.stringify(user));
+        alert("تم إنشاء الحساب! جاري إرسال طلبك...");
+        closeModal();
+        finalSend();
+    }
+
     function handleLogin() {
         const phone = document.getElementById('login-phone').value;
         const pass = document.getElementById('login-pass').value;
@@ -221,33 +206,36 @@
 
         if (saved && JSON.parse(saved).pass === pass) {
             localStorage.setItem('loggedUser', saved);
-            alert("تم تسجيل الدخول بنجاح.");
-            showPage('main-page');
+            closeModal();
+            finalSend();
         } else {
-            alert("البيانات خاطئة، تأكد من الرقم وكلمة المرور.");
+            alert("خطأ في البيانات أو الحساب غير موجود.");
         }
     }
 
-    // إرسال الطلب لـ Formspree
-    document.getElementById("orderForm").onsubmit = async function(e) {
-        e.preventDefault();
+    async function finalSend() {
         const btn = document.getElementById('submitBtn');
         const user = JSON.parse(localStorage.getItem('loggedUser'));
-        btn.innerText = "جاري الإرسال..."; btn.disabled = true;
+        btn.innerText = "جاري الإرسال... ⏳"; btn.disabled = true;
 
         const data = new FormData();
-        data.append("الاسم", user.name); data.append("الهاتف", user.phone);
-        data.append("العنوان", user.address); data.append("الخدمة", document.getElementById('hidden-service').value);
-        data.append("التفاصيل", document.getElementById('user-desc').value);
+        data.append("الزبون", user.name);
+        data.append("هاتف", user.phone);
+        data.append("العنوان", user.address);
+        data.append("الخدمة", document.getElementById('hidden-service').value);
+        data.append("المنطقة", document.getElementById('user-loc').value);
+        data.append("الوصف", document.getElementById('user-desc').value);
 
         try {
-            const res = await fetch("https://formspree.io/f/xzdelngd", {
+            await fetch("https://formspree.io/f/xzdelngd", {
                 method: "POST", body: data, headers: {'Accept': 'application/json'}
             });
-            if (res.ok) { alert("✅ تم استلام طلبك! سنتصل بك قريباً."); showPage('main-page'); }
-        } catch(e) { alert("حدث خطأ في الاتصال."); }
+            alert("✅ تم إرسال الطلب بنجاح يا " + user.name);
+            showPage('main-page');
+            document.getElementById("orderForm").reset();
+        } catch (e) { alert("فشل الإرسال."); }
         btn.innerText = "إرسال الطلب 🚀"; btn.disabled = false;
-    };
+    }
 </script>
 </body>
 </html>
