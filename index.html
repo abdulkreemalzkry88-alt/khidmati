@@ -147,21 +147,26 @@
             <div id="form-page">
                 <div class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> العودة للرئيسية</div>
                 <h2 id="service-title"></h2>
-                <input type="hidden" id="hidden-service" />
+                <input type="hidden" id="hidden-service" name="الخدمة الأساسية" />
+                
                 <label>نوع الخدمة المطلوبة:</label>
-                <select id="sub-service"></select>
+                <select id="sub-service" name="نوع الخدمة"></select>
+                
                 <label>المنطقة في البصرة:</label>
-                <select id="user-loc" required>
+                <select id="user-loc" name="المنطقة" required>
                     <option value="">اختر منطقتك...</option>
                     <option>مركز البصرة</option><option>الزبير</option><option>شط العرب</option>
                     <option>أبي الخصيب</option><option>القرنة</option><option>الفاو</option>
                     <option>الهارثة</option><option>سفوان</option>
                 </select>
+                
                 <label>وصف المشكلة:</label>
-                <textarea id="user-desc" rows="3" placeholder="اشرح لنا ما تحتاجه..."></textarea>
+                <textarea id="user-desc" name="وصف المشكلة" rows="3" placeholder="اشرح لنا ما تحتاجه..."></textarea>
+                
                 <label>رقم الموبايل:</label>
-                <input type="tel" id="user-phone" placeholder="07XXXXXXXXX" required>
-                <button type="submit" class="btn-submit" id="submitBtn">إرسال الطلب عبر البريد 🚀</button>
+                <input type="tel" id="user-phone" name="رقم الهاتف" placeholder="07XXXXXXXXX" required>
+                
+                <button type="submit" class="btn-submit" id="submitBtn">إرسال الطلب 🚀</button>
             </div>
         </form>
 
@@ -181,7 +186,7 @@
             'كاميرات': ['نصب منظومة كاميرات', 'برمجة DVR / NVR', 'ربط الكاميرات على الموبايل'], 
             'نقل': ['نقل أثاث منزلي', 'تأجير سيارات حمل', 'توصيل طلبات منزلية'], 
             'سيارات': ['كهرباء سيارات', 'ميكانيك عام', 'تكييف سيارات'], 
-            'بناء': ['بناء وترميم عام للمنازل', 'تطبيق سيراميك ومرمر', 'لبخ وجص ونثر'], 
+            'بناء': ['بناء وترميم عام للمنازل', 'تطبق سيراميك ومرمر', 'لبخ وجص ونثر'], 
             'صبغ': ['صبغ داخلي (جوتن)', 'تركيب ورق جدران حديث', 'ديكورات جبسم بورد'] 
         };
 
@@ -200,30 +205,39 @@
             document.getElementById('main-page').style.display = 'grid'; 
         }
 
-        document.getElementById("orderForm").onsubmit = function(e) {
+        document.getElementById("orderForm").onsubmit = async function(e) {
             e.preventDefault();
-            
-            const service = document.getElementById('hidden-service').value;
-            const subService = document.getElementById('sub-service').value;
-            const location = document.getElementById('user-loc').value;
-            const description = document.getElementById('user-desc').value;
-            const phone = document.getElementById('user-phone').value;
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "جاري الإرسال... ⏳";
+            submitBtn.disabled = true;
 
-            const subject = encodeURIComponent("طلب خدمة جديد من تطبيق خدماتي");
-            const body = encodeURIComponent(
-                "تفاصيل طلب الزبون:\n" +
-                "------------------\n" +
-                "نوع الخدمة: " + service + " - " + subService + "\n" +
-                "المنطقة: " + location + "\n" +
-                "رقم هاتف الزبون: " + phone + "\n" +
-                "وصف الحالة: " + description
-            );
+            const formData = new FormData();
+            formData.append("الخدمة الأساسية", document.getElementById('hidden-service').value);
+            formData.append("نوع الخدمة", document.getElementById('sub-service').value);
+            formData.append("المنطقة", document.getElementById('user-loc').value);
+            formData.append("رقم الهاتف", document.getElementById('user-phone').value);
+            formData.append("وصف المشكلة", document.getElementById('user-desc').value);
 
-            // تم التحديث بإيميلك الخاص لاستلام الطلبات
-            window.location.href = "mailto:abdulkreemalzkey88@gmail.com?subject=" + subject + "&body=" + body;
-            
-            alert("تم تجهيز الطلب، يرجى الضغط على 'إرسال' في تطبيق البريد الإلكتروني.");
-            goBack();
+            try {
+                const response = await fetch("https://formspree.io/f/xzdelngd", {
+                    method: "POST",
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    alert("✅ تم إرسال طلبك بنجاح! سنتواصل معك قريباً.");
+                    this.reset();
+                    goBack();
+                } else {
+                    alert("❌ فشل الإرسال، يرجى التأكد من تفعيل الإيميل في Formspree.");
+                }
+            } catch (error) {
+                alert("❌ حدث خطأ في الاتصال، يرجى المحاولة لاحقاً.");
+            } finally {
+                submitBtn.innerText = "إرسال الطلب 🚀";
+                submitBtn.disabled = false;
+            }
         };
     </script>
 </body>
