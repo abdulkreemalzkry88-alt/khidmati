@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خدماتي العراق الشامل</title>
+    <title>خدماتي | العراق الشامل</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
@@ -16,94 +16,88 @@
         body { 
             font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; 
             background: var(--dark); color: var(--text); min-height: 100vh;
-            /* خلفية خريطة العراق زجاجية مضللة */
-            background-image: linear-gradient(rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 0.8)), 
+            background-image: linear-gradient(rgba(2, 6, 23, 0.85), rgba(2, 6, 23, 0.85)), 
                               url('https://www.transparentpng.com/download/iraq-map/vector-iraq-map-free-png-images-SgYl0T.png');
             background-size: contain; background-position: center; background-repeat: no-repeat; background-attachment: fixed;
         }
 
-        header { padding: 40px 20px; text-align: center; }
-        header h1 { font-size: 2.5rem; font-weight: 900; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header { padding: 50px 20px; text-align: center; }
+        header h1 { font-size: 3rem; font-weight: 900; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
+        header p { opacity: 0.8; font-size: 1.2rem; margin-top: 10px; }
 
         .container { width: 90%; max-width: 1100px; margin: 0 auto; }
 
-        /* شبكة الخدمات */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding: 20px 0; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; padding: 30px 0; }
         .service-card { 
-            background: var(--glass); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px; padding: 20px 10px; text-align: center; cursor: pointer; transition: 0.3s;
+            background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px; padding: 30px 15px; text-align: center; cursor: pointer; transition: 0.3s;
         }
-        .service-card:hover { border-color: var(--accent); transform: scale(1.05); box-shadow: 0 0 15px var(--accent); }
-        .icon-box { font-size: 2rem; margin-bottom: 10px; color: var(--accent); }
+        .service-card:hover { border-color: var(--accent); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2); }
+        .icon-box { font-size: 2.8rem; margin-bottom: 15px; color: var(--accent); }
+        .service-card h3 { font-size: 1.2rem; font-weight: 700; margin: 0; }
 
-        /* النافذة المنبثقة المركزية */
+        /* النافذة المنبثقة - توسيط حقيقي */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); z-index: 9999;
-            justify-content: center; align-items: center; 
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(12px); z-index: 9999;
+            display: none; justify-content: center; align-items: center; /* توسيط أفقي وعمودي */
         }
 
         .modal-content { 
-            background: rgba(15, 23, 42, 0.95); color: #fff; border-radius: 25px; 
-            padding: 30px; width: 90%; max-width: 500px; position: relative;
-            border: 2px solid var(--accent); box-shadow: 0 0 30px rgba(6, 182, 212, 0.4);
-            max-height: 85vh; overflow-y: auto;
-            scrollbar-width: thin;
+            background: #ffffff; color: #1e293b; border-radius: 30px; 
+            padding: 35px; width: 95%; max-width: 500px; position: relative;
+            box-shadow: 0 0 50px rgba(6, 182, 212, 0.4); border: 4px solid var(--accent);
+            max-height: 90vh; overflow-y: auto; box-sizing: border-box;
         }
 
-        .close-modal { position: absolute; top: 15px; left: 20px; font-size: 2rem; cursor: pointer; color: #94a3b8; }
+        .close-modal { position: absolute; top: 15px; left: 20px; font-size: 2.2rem; cursor: pointer; color: #64748b; font-weight: bold; }
 
-        h2 { text-align: center; font-weight: 900; margin-bottom: 25px; color: var(--accent); }
-        label { display: block; margin-top: 15px; font-weight: 700; font-size: 0.9rem; color: #cbd5e1; }
+        h2 { text-align: center; font-size: 1.8rem; font-weight: 900; color: var(--dark); margin-bottom: 25px; border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+        label { display: block; margin-top: 15px; font-weight: 800; font-size: 1rem; color: #334155; }
         
         input, textarea, select { 
-            width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; 
-            border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); 
-            box-sizing: border-box; outline: none; font-family: 'Tajawal', sans-serif; 
-            color: #fff; font-size: 1rem;
+            width: 100%; padding: 14px; margin: 8px 0; border-radius: 15px; 
+            border: 2px solid #cbd5e1; background: #f8fafc; box-sizing: border-box; 
+            outline: none; font-family: 'Tajawal', sans-serif; font-size: 1.05rem; font-weight: 600;
         }
-        select option { background: #0f172a; color: #fff; }
-
-        .terms-box {
-            background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; font-size: 0.75rem;
-            max-height: 80px; overflow-y: auto; margin: 10px 0; border: 1px solid rgba(255,255,255,0.1);
-            color: #94a3b8;
-        }
-        .checkbox-container { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; padding: 5px; }
-        .checkbox-container input { width: auto; }
-
-        .btn-action { 
-            background: var(--accent); color: #000; border: none; padding: 16px; 
-            border-radius: 15px; width: 100%; font-size: 1.2rem; font-weight: 900; 
-            cursor: pointer; margin-top: 20px; transition: 0.3s;
-        }
-        .btn-action:hover { background: #fff; transform: scale(1.02); }
+        input:focus, select:focus { border-color: var(--primary); }
 
         .loc-btn {
-            background: rgba(255,255,255,0.1); color: var(--accent); border: 1px dashed var(--accent); padding: 10px;
-            border-radius: 10px; width: 100%; cursor: pointer; font-weight: 700; margin-top: 5px;
+            background: #e2e8f0; color: #0f172a; border: 2px dashed var(--accent); padding: 12px;
+            border-radius: 15px; width: 100%; cursor: pointer; font-weight: 800;
+            display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; transition: 0.3s;
         }
+        .loc-btn.active { background: #dcfce7; color: #166534; border-style: solid; }
+
+        .terms-box {
+            background: #f1f5f9; padding: 12px; border-radius: 15px; font-size: 0.85rem;
+            max-height: 120px; overflow-y: auto; margin: 15px 0; border: 1px solid #cbd5e1;
+            line-height: 1.7; color: #475569; text-align: justify;
+        }
+        .checkbox-container { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; font-weight: 800; color: #0f172a; margin: 15px 0; }
+        .checkbox-container input { width: auto; transform: scale(1.3); }
+
+        .btn-action { 
+            background: linear-gradient(135deg, #0f172a, #1e293b); color: white; border: none; padding: 18px; 
+            border-radius: 18px; width: 100%; font-size: 1.25rem; font-weight: 900; 
+            cursor: pointer; margin-top: 10px; transition: 0.3s;
+        }
+        .btn-action:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+        .social-section { text-align: center; padding: 40px 0; }
+        .social-btn { text-decoration: none; color: #fff; padding: 12px 25px; border-radius: 50px; background: var(--glass); border: 1px solid rgba(255,255,255,0.1); margin: 5px; display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>خِدْماتي <span>العراق</span></h1>
+    <p>بوابتك للحصول على أفضل الحرفيين</p>
 </header>
 
 <div class="container">
-    <div class="services-grid">
-        <div class="service-card" onclick="openServiceModal('سباكة')"><div class="icon-box"><i class="fas fa-droplet"></i></div><h3>سباكة</h3></div>
-        <div class="service-card" onclick="openServiceModal('كهرباء')"><div class="icon-box"><i class="fas fa-bolt-lightning"></i></div><h3>كهرباء</h3></div>
-        <div class="service-card" onclick="openServiceModal('تكييف')"><div class="icon-box"><i class="fas fa-wind"></i></div><h3>تكييف</h3></div>
-        <div class="service-card" onclick="openServiceModal('أجهزة منزلية')"><div class="icon-box"><i class="fas fa-microchip"></i></div><h3>أجهزة</h3></div>
-        <div class="service-card" onclick="openServiceModal('نجارة وحدادة')"><div class="icon-box"><i class="fas fa-screwdriver-wrench"></i></div><h3>نجارة</h3></div>
-        <div class="service-card" onclick="openServiceModal('كاميرات مراقبة')"><div class="icon-box"><i class="fas fa-video"></i></div><h3>كاميرات</h3></div>
-        <div class="service-card" onclick="openServiceModal('نقل أثاث')"><div class="icon-box"><i class="fas fa-truck-ramp-box"></i></div><h3>نقل</h3></div>
-        <div class="service-card" onclick="openServiceModal('صيانة سيارات')"><div class="icon-box"><i class="fas fa-car-wrench"></i></div><h3>سيارات</h3></div>
-        <div class="service-card" onclick="openServiceModal('بناء وترميم')"><div class="icon-box"><i class="fas fa-trowel-bricks"></i></div><h3>بناء</h3></div>
-        <div class="service-card" onclick="openServiceModal('أصباغ وديكور')"><div class="icon-box"><i class="fas fa-palette"></i></div><h3>صبغ</h3></div>
-    </div>
+    <div class="services-grid" id="mainGrid">
+        </div>
 </div>
 
 <div id="masterModal" class="modal-overlay">
@@ -112,103 +106,110 @@
         
         <div id="step-order">
             <h2>تفاصيل الطلب</h2>
-            <label>التصنيف التفصيلي:</label>
+            <label><i class="fas fa-tools"></i> نوع الخدمة الدقيق:</label>
             <select id="sub-service"></select>
             
-            <label>الموقع الجغرافي (اختياري):</label>
-            <button type="button" class="loc-btn" id="loc-btn" onclick="getLocation()">تحديد موقعي الحالي 📍</button>
-            <input type="hidden" id="maps-link" value="لم يحدد">
+            <label><i class="fas fa-location-dot"></i> موقع المنزل (G-Maps):</label>
+            <button type="button" class="loc-btn" id="loc-btn" onclick="askLocation()">
+                تحديد موقعي الحالي تلقائياً 📍
+            </button>
+            <input type="hidden" id="geo-data" value="غير محدد">
 
-            <label>وصف المشكلة:</label>
-            <textarea id="user-desc" rows="3" placeholder="اكتب ما تحتاجه هنا..."></textarea>
+            <label><i class="fas fa-pen"></i> وصف العطل أو المشكلة:</label>
+            <textarea id="user-desc" rows="3" placeholder="مثال: البورد الكهربائي يفصل باستمرار..."></textarea>
             
-            <button class="btn-action" onclick="goToAuth()">المتابعة للتسجيل 🚀</button>
+            <button class="btn-action" onclick="checkUserStatus()">الخطوة التالية 🚀</button>
         </div>
 
         <div id="step-auth" style="display:none">
             <h2>بيانات الحساب</h2>
             <label>الاسم الثلاثي:</label>
-            <input type="text" id="reg-name" placeholder="الاسم الكامل">
+            <input type="text" id="u-name" placeholder="اكتب اسمك الثلاثي">
             
             <label>رقم الهاتف:</label>
-            <input type="tel" id="reg-phone" placeholder="07XXXXXXXXX" maxlength="11">
+            <input type="tel" id="u-phone" placeholder="07XXXXXXXXX" maxlength="11">
 
             <label>المحافظة:</label>
-            <select id="reg-province" onchange="updateDistricts()">
-                <option value="">اختر المحافظة...</option>
-                <option>بغداد</option><option>البصرة</option><option>نينوى</option>
-                <option>أربيل</option><option>النجف</option><option>كربلاء</option>
-                <option>ذي قار</option><option>بابل</option><option>الأنبار</option>
-                <option>كركوك</option><option>صلاح الدين</option><option>ديالى</option>
-                <option>ميسان</option><option>واسط</option><option>المثنى</option>
+            <select id="u-prov" onchange="loadDistricts()">
+                <option value="">اختر محافظة...</option>
+                <option>بغداد</option><option>البصرة</option><option>نينوى</option><option>أربيل</option><option>النجف</option>
+                <option>كربلاء</option><option>ذي قار</option><option>بابل</option><option>الأنبار</option><option>كركوك</option>
+                <option>صلاح الدين</option><option>ديالى</option><option>ميسان</option><option>واسط</option><option>المثنى</option>
                 <option>القادسية</option><option>دهوك</option><option>السليمانية</option>
             </select>
 
             <label>القضاء:</label>
-            <select id="reg-district">
-                <option value="">اختر المحافظة أولاً</option>
-            </select>
+            <select id="u-dist"><option value="">اختر المحافظة أولاً</option></select>
 
             <label>المنطقة / الحي:</label>
-            <input type="text" id="reg-area" placeholder="اسم المنطقة أو الحي">
+            <input type="text" id="u-area" placeholder="اكتب اسم منطقتك">
 
             <label>كلمة المرور:</label>
-            <input type="password" id="reg-pass" placeholder="******">
+            <input type="password" id="u-pass" placeholder="أدخل كلمة مرور قوية">
 
             <div class="terms-box">
-                <b>قوانين وشروط الاستخدام:</b><br>
-                1. يلتزم المستخدم بمصداقية البيانات.<br>
-                2. الموقع يضمن جودة العمل من قبل الفنيين.<br>
-                3. يتم الاتفاق المادي بين الطرفين.<br>
-                4. يمنع استخدام الموقع لأغراض وهمية.
+                <b>سياسة وشروط العمل:</b><br>
+                • للعميل: نضمن لك فنيين موثوقين، ويرجى الحفاظ على نظافة المكان بعد العمل.<br>
+                • للفني: الالتزام بالموعد والأمانة المهنية هو معيار تقييمك.<br>
+                • عام: الموقع وسيط تقني لتسهيل الوصول، والاتفاق المادي يتم بشفافية بين الطرفين. أي إساءة استخدام تؤدي لحظر الحساب نهائياً.
             </div>
-
+            
             <div class="checkbox-container">
-                <input type="checkbox" id="terms-check">
-                <label for="terms-check">أوافق على الشروط والقوانين</label>
+                <input type="checkbox" id="u-agree">
+                <span>أوافق على الشروط والقوانين</span>
             </div>
 
-            <button class="btn-action" onclick="submitFinal()">إرسال الطلب النهائي ✅</button>
+            <button class="btn-action" onclick="finalSubmit()">إرسال الطلب بنجاح ✅</button>
         </div>
     </div>
 </div>
 
+<div class="social-section">
+    <a href="https://wa.me/9647716741488" class="social-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
+    <a href="https://instagram.com/ab0nn" class="social-btn"><i class="fab fa-instagram"></i> انستقرام</a>
+</div>
+
 <script>
-    // بيانات الأقضية لكل محافظة
-    const districtsData = {
-        'بغداد': ['الرصافة', 'الكرخ', 'الأعظمية', 'الصدر', 'الكاظمية', 'المحمودية', 'أبو غريب', 'الطارمية'],
-        'البصرة': ['مركز البصرة', 'الزبير', 'شط العرب', 'أبي الخصيب', 'القرنة', 'الفاو', 'المدينة', 'الهارثة'],
-        'نينوى': ['الموصل', 'تلكيف', 'الحمدانية', 'شيخان', 'سنجار', 'تلعفر'],
-        'النجف': ['مركز النجف', 'الكوفة', 'المناذرة', 'المشخاب'],
-        'كربلاء': ['مركز كربلاء', 'الهندية', 'عين التمر'],
-        'ذي قار': ['الناصرية', 'الشطرة', 'الرفاعي', 'سوق الشيوخ', 'الجبايش'],
-        'بابل': ['الحلة', 'المحاويل', 'المسيب', 'القاسم', 'الهاشمية'],
-        'أربيل': ['مركز أربيل', 'عنكاوا', 'شقلاوة', 'سوران'],
-        'الأنبار': ['الرمادي', 'الفلوجة', 'هيت', 'القائم', 'الرطبة'],
-        'كركوك': ['مركز كركوك', 'الحويجة', 'دقوق', 'دبس'],
-        'صلاح الدين': ['تكريت', 'سامراء', 'بلد', 'الدجيل', 'طوزخورماتو'],
-        'ديالى': ['بعقوبة', 'المقدادية', 'الخالص', 'خانقين'],
-        'ميسان': ['العمارة', 'المجر الكبير', 'قلعة صالح', 'الكحلاء'],
-        'واسط': ['الكوت', 'النعمانية', 'العزيزية', 'الصويرة'],
-        'المثنى': ['السماوة', 'الرميثة', 'الخضر'],
-        'القادسية': ['الديوانية', 'عفك', 'الشامية', 'الحمزة'],
-        'دهوك': ['مركز دهوك', 'زاخو', 'عمادية'],
-        'السليمانية': ['مركز السليمانية', 'جمجمال', 'رانية', 'دوكان']
+    const services = [
+        { name: 'سباكة', icon: 'fa-droplet', subs: ['تأسيس مياه', 'تصليح مضخات', 'تسليك مجاري'] },
+        { name: 'كهرباء', icon: 'fa-bolt', subs: ['تأسيس منازل', 'تصليح بوردات', 'إنارة'] },
+        { name: 'تكييف', icon: 'fa-wind', subs: ['غسل سبلت', 'شحن غاز', 'صيانة كارت'] },
+        { name: 'أجهزة منزلية', icon: 'fa-microchip', subs: ['غسالات', 'ثلاجات', 'طباخات'] },
+        { name: 'نجارة وحدادة', icon: 'fa-screwdriver-wrench', subs: ['تصليح أثاث', 'لحام حديد'] },
+        { name: 'كاميرات مراقبة', icon: 'fa-video', subs: ['نصب منظومة', 'برمجة DVR'] },
+        { name: 'نقل أثاث', icon: 'fa-truck-ramp-box', subs: ['نقل منزلي', 'سيارة حمل'] },
+        { name: 'صيانة سيارات', icon: 'fa-car-wrench', subs: ['كهرباء وباتري', 'ميكانيك'] },
+        { name: 'بناء وترميم', icon: 'fa-trowel-bricks', subs: ['بناء طابوق', 'سيراميك'] },
+        { name: 'أصباغ وديكور', icon: 'fa-palette', subs: ['صبغ داخلي', 'ورق جدران'] }
+    ];
+
+    const districts = {
+        'بغداد': ['الرصافة', 'الكرخ', 'الصدر', 'الكاظمية', 'المنصور'],
+        'البصرة': ['المركز', 'الزبير', 'شط العرب', 'أبي الخصيب', 'القرنة', 'الهارثة'],
+        'نينوى': ['الموصل', 'تلعفر', 'سنجار'], 'النجف': ['المركز', 'الكوفة'],
+        'كربلاء': ['المركز', 'الهندية'], 'ذي قار': ['الناصرية', 'الشطرة'],
+        'أربيل': ['المركز', 'شقلاوة'], 'بابل': ['الحلة', 'المسيب'],
+        'ديالى': ['بعقوبة', 'الخالص'], 'ميسان': ['العمارة'], 'واسط': ['الكوت']
+        // يمكن إضافة باقي الأقضية بنفس النمط
     };
 
-    const subServices = { 
-        'سباكة': ['تأسيس مياه', 'تصليح مضخات'], 'كهرباء': ['صيانة بوردات', 'تأسيس'],
-        'تكييف': ['غسل سبلت', 'شحن غاز'], 'أجهزة منزلية': ['غسالات', 'ثلاجات'],
-        'نجارة وحدادة': ['تصليح أثاث', 'لحام'], 'كاميرات مراقبة': ['نصب', 'برمجة'],
-        'نقل أثاث': ['داخل المدينة', 'بين المحافظات'], 'صيانة سيارات': ['كهرباء', 'ميكانيك'],
-        'بناء وترميم': ['بناء', 'سيراميك'], 'أصباغ وديكور': ['أصباغ', 'ورق جدران']
-    };
+    let selectedMain = "";
 
-    let currentService = "";
+    // إنشاء بطاقات الخدمات
+    const grid = document.getElementById('mainGrid');
+    services.forEach(s => {
+        grid.innerHTML += `
+            <div class="service-card" onclick="openModal('${s.name}')">
+                <div class="icon-box"><i class="fas ${s.icon}"></i></div>
+                <h3>${s.name}</h3>
+            </div>
+        `;
+    });
 
-    function openServiceModal(s) {
-        currentService = s;
-        document.getElementById('sub-service').innerHTML = subServices[s].map(x => `<option>${x}</option>`).join('');
+    function openModal(name) {
+        selectedMain = name;
+        const sData = services.find(x => x.name === name);
+        document.getElementById('sub-service').innerHTML = sData.subs.map(opt => `<option>${opt}</option>`).join('');
         document.getElementById('step-order').style.display = 'block';
         document.getElementById('step-auth').style.display = 'none';
         document.getElementById('masterModal').style.display = 'flex';
@@ -216,55 +217,60 @@
 
     function closeModal() { document.getElementById('masterModal').style.display = 'none'; }
 
-    // تحديث الأقضية عند اختيار المحافظة
-    function updateDistricts() {
-        const province = document.getElementById('reg-province').value;
-        const districtSelect = document.getElementById('reg-district');
-        districtSelect.innerHTML = districtsData[province] 
-            ? districtsData[province].map(d => `<option>${d}</option>`).join('')
-            : '<option>اختر المحافظة أولاً</option>';
-    }
-
-    function getLocation() {
+    function askLocation() {
         const btn = document.getElementById('loc-btn');
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(p => {
-                document.getElementById('maps-link').value = `https://www.google.com/maps?q=${p.coords.latitude},${p.coords.longitude}`;
-                btn.innerHTML = "تم تحديد الموقع ✅"; btn.style.color = "#2dd4bf";
-            });
-        }
+        btn.innerText = "جاري التحديد... ⏳";
+        navigator.geolocation.getCurrentPosition(p => {
+            document.getElementById('geo-data').value = `https://www.google.com/maps?q=${p.coords.latitude},${p.coords.longitude}`;
+            btn.innerHTML = "تم حفظ موقعك بنجاح ✅";
+            btn.classList.add('active');
+        }, () => { alert("يرجى تفعيل GPS"); btn.innerText = "تحديد موقعي الحالي تلقائياً 📍"; });
     }
 
-    function goToAuth() {
-        if (!document.getElementById('user-desc').value) return alert("يرجى وصف المشكلة.");
+    function loadDistricts() {
+        const prov = document.getElementById('u-prov').value;
+        const distSelect = document.getElementById('u-dist');
+        distSelect.innerHTML = districts[prov] 
+            ? districts[prov].map(d => `<option>${d}</option>`).join('')
+            : '<option>أخرى / غير مدرج</option>';
+    }
+
+    function checkUserStatus() {
+        if (!document.getElementById('user-desc').value) return alert("يرجى كتابة وصف المشكلة");
         document.getElementById('step-order').style.display = 'none';
         document.getElementById('step-auth').style.display = 'block';
+        
+        const saved = localStorage.getItem('user_data');
+        if(saved) {
+            const u = JSON.parse(saved);
+            document.getElementById('u-name').value = u.name;
+            document.getElementById('u-phone').value = u.phone;
+        }
     }
 
-    async function submitFinal() {
-        const name = document.getElementById('reg-name').value;
-        const phone = document.getElementById('reg-phone').value;
-        const prov = document.getElementById('reg-province').value;
-        const dist = document.getElementById('reg-district').value;
-        const area = document.getElementById('reg-area').value;
-        const agreed = document.getElementById('terms-check').checked;
+    async function finalSubmit() {
+        const name = document.getElementById('u-name').value;
+        const phone = document.getElementById('u-phone').value;
+        const agreed = document.getElementById('u-agree').checked;
 
-        if (name.split(' ').length < 3 || phone.length < 11 || !prov || !dist || !area || !agreed) {
-            return alert("يرجى إكمال كافة البيانات والموافقة على الشروط.");
-        }
+        if (name.split(' ').length < 3 || phone.length < 11 || !agreed) return alert("أكمل البيانات ووافق على الشروط");
 
         const data = new FormData();
-        data.append("الاسم", name); data.append("الهاتف", phone);
-        data.append("المحافظة", prov); data.append("القضاء", dist); data.append("المنطقة", area);
-        data.append("القسم", currentService); data.append("نوع العمل", document.getElementById('sub-service').value);
-        data.append("وصف المشكلة", document.getElementById('user-desc').value);
-        data.append("رابط الموقع", document.getElementById('maps-link').value);
+        data.append("الزبون", name);
+        data.append("الموبايل", phone);
+        data.append("الموقع", document.getElementById('u-prov').value + " - " + document.getElementById('u-dist').value);
+        data.append("المنطقة", document.getElementById('u-area').value);
+        data.append("الخدمة", selectedMain + " / " + document.getElementById('sub-service').value);
+        data.append("الوصف", document.getElementById('user-desc').value);
+        data.append("خرائط جوجل", document.getElementById('geo-data').value);
+
+        localStorage.setItem('user_data', JSON.stringify({name, phone}));
 
         try {
             await fetch("https://formspree.io/f/xzdelngd", { method: "POST", body: data, headers: {'Accept': 'application/json'} });
-            alert("تم إرسال طلبك بنجاح! شكراً لك.");
+            alert("تم الإرسال بنجاح! شكراً لك.");
             closeModal();
-        } catch (e) { alert("خطأ في الإرسال."); }
+        } catch (e) { alert("حدث خطأ."); }
     }
 </script>
 </body>
