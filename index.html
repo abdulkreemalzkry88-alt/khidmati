@@ -3,389 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>خدماتي العراق - النسخة المتكاملة</title>
+    <title>خدماتي - البصرة الشامل</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-        
         :root { 
-            --royal-blue: #001a4d; 
+            --royal-blue: #002366; 
             --gold: #D4AF37; 
             --white: #ffffff; 
-            --glass: rgba(255, 255, 255, 0.08);
-            --gold-glow: rgba(212, 175, 55, 0.5);
-            --error: #ff4d4d;
+            --card-bg: rgba(30, 41, 59, 0.8); 
             --success: #22c55e;
         }
         
         body { 
             font-family: 'Tajawal', sans-serif; margin: 0; padding: 0;
-            background: radial-gradient(circle at top, var(--royal-blue), #01040a);
+            background: radial-gradient(circle at top, var(--royal-blue), #020617);
             color: var(--white); min-height: 100vh; overflow-x: hidden;
+            user-select: none; -webkit-tap-highlight-color: transparent;
         }
 
-        /* شاشة البداية */
+        /* شاشة التحميل */
         #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--royal-blue); z-index: 10000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 1s;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s;
         }
-        .splash-logo { font-size: 3rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 20px var(--gold-glow); animation: pulse 1.5s infinite; }
+        .splash-logo { font-size: 3.5rem; font-weight: 900; color: var(--gold); animation: pulse 2s infinite; }
+        .loader { width: 40px; height: 40px; border: 4px solid rgba(212, 175, 55, 0.2); border-top: 4px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px; }
         
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } }
-        
-        header { padding: 60px 20px 30px; text-align: center; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        header { padding: 60px 20px 20px; text-align: center; }
         header h1 { font-size: 2.8rem; font-weight: 900; margin: 0; color: var(--gold); }
-        header p { color: #fff; font-size: 1.1rem; margin-top: 5px; opacity: 0.9; }
-        
-        .container { width: 94%; max-width: 1200px; margin: 0 auto; padding-bottom: 100px; }
+        header span { color: #fff; font-weight: 400; font-size: 1.5rem; display: block; }
+        header p { opacity: 0.8; margin-top: 5px; }
+
+        .container { width: 95%; max-width: 1200px; margin: 0 auto; padding-bottom: 120px; }
         
         .services-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
-            gap: 12px; 
+            gap: 15px; 
+            padding: 10px; 
         }
-        @media (min-width: 600px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (min-width: 900px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
-        @media (min-width: 1100px) { .services-grid { grid-template-columns: repeat(5, 1fr); } }
-        
+        @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
+
         .service-card { 
-            background: var(--glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 20px 10px;
-            text-align: center; cursor: pointer; transition: 0.3s; position: relative;
+            background: var(--card-bg); backdrop-filter: blur(15px); 
+            border: 1px solid rgba(212, 175, 55, 0.1); 
+            border-radius: 22px; padding: 20px 10px; text-align: center; 
+            cursor: pointer; transition: 0.3s;
         }
         .service-card:active { transform: scale(0.95); }
-        .service-card:hover { border-color: var(--gold); background: rgba(255, 255, 255, 0.12); }
 
         .icon-box { 
-            width: 55px; height: 55px; border-radius: 15px; display: flex; 
-            align-items: center; justify-content: center; margin: 0 auto 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 65px; height: 65px; border-radius: 18px; display: flex; 
+            align-items: center; justify-content: center; margin: 0 auto 15px; 
+            position: relative;
         }
-        .service-card h3 { font-size: 0.85rem; font-weight: 700; margin: 0; color: #fff; }
+        .service-card h3 { font-size: 0.95rem; margin: 0; font-weight: 700; color: #fff; }
 
-        /* Modals */
+        /* النوافذ المنبثقة */
         .modal-overlay { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; 
-            align-items: center; padding: 15px; backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; 
+            align-items: center; padding: 15px; backdrop-filter: blur(8px);
         }
-        
         .modal-content { 
-            background: #fff; color: #222; border-radius: 25px; padding: 30px; 
-            width: 100%; max-width: 400px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            animation: pop 0.3s ease-out; position: relative;
+            background: #fff; color: #333; border-radius: 25px; padding: 25px; 
+            width: 100%; max-width: 400px; position: relative;
+            animation: slideUp 0.4s ease-out;
         }
-        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        label { display: block; font-size: 0.8rem; font-weight: bold; margin: 12px 0 5px; color: #555; }
         input, select, textarea { 
-            width: 100%; padding: 14px; border: 1.5px solid #ddd; border-radius: 12px; 
-            font-family: 'Tajawal'; box-sizing: border-box; font-size: 1rem;
+            width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; 
+            border: 1.5px solid #eee; font-family: 'Tajawal'; box-sizing: border-box; font-size: 1rem;
         }
-        input:focus { border-color: var(--gold); outline: none; }
+        input:focus { border-color: var(--royal-blue); outline: none; }
+
+        .btn-submit { 
+            background: var(--royal-blue); color: white; border: none; padding: 16px; 
+            border-radius: 12px; width: 100%; font-size: 1.1rem; font-weight: 900; 
+            cursor: pointer; margin-top: 10px; transition: 0.3s;
+        }
+        .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
         
-        .error-msg { color: var(--error); font-size: 0.75rem; display: none; margin-top: 5px; }
+        .loading-spinner { display: none; text-align: center; margin-top: 15px; color: var(--royal-blue); font-weight: bold; }
 
-        .btn-main { 
-            background: var(--royal-blue); color: white; border: none; padding: 15px; 
-            border-radius: 12px; width: 100%; font-size: 1rem; font-weight: 900; 
-            cursor: pointer; margin-top: 15px;
+        .whatsapp-float { 
+            position: fixed; bottom: 25px; left: 25px; background: #25d366; 
+            color: white !important; border-radius: 50px; padding: 12px 25px; 
+            display: flex; align-items: center; gap: 10px; text-decoration: none; 
+            font-weight: bold; z-index: 9998; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
         }
-        .btn-link { background: none; border: none; color: var(--royal-blue); font-weight: bold; cursor: pointer; text-decoration: underline; font-size: 0.8rem; }
-
-        /* لودر التحميل داخل النوافذ */
-        .inner-loader { display: none; text-align: center; padding: 10px; color: var(--royal-blue); }
     </style>
 </head>
 <body>
 
     <div id="splash">
-        <div class="splash-logo">خدماتي العراق</div>
-        <p style="color: var(--gold);">جارِ التحقق من البيانات...</p>
-        <div class="loader" style="width:30px; height:30px; border:3px solid #D4AF3733; border-top:3px solid #D4AF37; border-radius:50%; animation:spin 1s linear infinite; margin-top:20px;"></div>
+        <div class="splash-logo">خِدْماتي</div>
+        <p style="color: var(--gold);">البصرة الشامل</p>
+        <div class="loader"></div>
     </div>
 
     <header>
-        <h1>خدماتي العراق</h1>
-        <p>المنصة الأشمل لخدمات الصيانة والمنزل</p>
+        <h1>خِدْماتي <span>البصرة</span></h1>
+        <p>كل ما يحتاجه منزلك في مكان واحد</p>
     </header>
 
     <div class="container">
         <div class="services-grid" id="grid"></div>
     </div>
 
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal-overlay">
+    <a href="https://wa.me/9647716741488" class="whatsapp-float">
+        <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> مراسلة واتساب
+    </a>
+
+    <!-- نافذة الطلب الموحدة -->
+    <div id="masterModal" class="modal-overlay">
         <div class="modal-content">
-            <h2 style="text-align:center; color:var(--royal-blue)">تسجيل الدخول</h2>
-            <form id="loginForm">
-                <label>رقم الهاتف أو البريد الإلكتروني:</label>
-                <input type="text" id="loginId" name="loginId" placeholder="07XXXXXXXXX" required>
-                
-                <label>كلمة السر:</label>
-                <input type="password" id="loginPass" name="password" required>
-                
-                <button type="submit" class="btn-main" id="loginBtn">دخول</button>
-                <div class="inner-loader" id="loginLoader">جارِ المعالجة...</div>
-
-                <div style="display:flex; justify-content:space-between; margin-top:15px;">
-                    <button type="button" class="btn-link" onclick="openModal('forgotModal')">نسيت السر؟</button>
-                    <button type="button" class="btn-link" onclick="openModal('registerModal')">حساب جديد</button>
-                </div>
-                <button type="button" style="width:100%; background:none; border:none; color:#999; margin-top:10px;" onclick="closeAll()">إلغاء</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Register Modal -->
-    <div id="registerModal" class="modal-overlay">
-        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
-            <h2 style="text-align:center; color:var(--royal-blue)">إنشاء حساب</h2>
-            <form id="registerForm">
-                <label>الاسم الثلاثي:</label>
-                <input type="text" id="regName" name="fullName" required>
-                
-                <label>رقم الهاتف أو الإيميل الشخصي:</label>
-                <input type="text" id="regId" name="contactInfo" placeholder="07XXXXXXXXX" required>
-                <div id="regIdErr" class="error-msg">يرجى إدخال معلومات تواصل صحيحة</div>
-
-                <div style="display:flex; gap:10px;">
-                    <div style="flex:1">
-                        <label>المحافظة:</label>
-                        <select name="city"><option>البصرة</option><option>بغداد</option><option>ميسان</option><option>ذي قار</option><option>نينوى</option></select>
-                    </div>
-                    <div style="flex:1">
-                        <label>القضاء:</label>
-                        <input type="text" name="district" required>
-                    </div>
-                </div>
-
-                <label>كلمة السر (8 خانات، حرف كبير، صغير، @):</label>
-                <input type="password" id="regPass" name="password" required>
-                <div id="regPassErr" class="error-msg">كلمة السر لا تستوفي الشروط الأمنية</div>
-
-                <div style="font-size:0.7rem; color:#666; margin-top:10px; display:flex; align-items:center; gap:5px;">
-                    <input type="checkbox" required> أوافق على شروط وسياسة الموقع
-                </div>
-
-                <button type="submit" class="btn-main" id="regBtn">تسجيل الحساب</button>
-                <div class="inner-loader" id="regLoader">جارِ الإرسال وتوليد الرمز...</div>
-                <button type="button" class="btn-link" style="display:block; margin:10px auto;" onclick="openModal('loginModal')">لديك حساب؟ سجل دخول</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Forgot Password Modal -->
-    <div id="forgotModal" class="modal-overlay">
-        <div class="modal-content">
-            <h2 style="text-align:center; color:var(--royal-blue)">استعادة الحساب</h2>
-            <div id="step1">
-                <label>رقم الهاتف أو الإيميل المسجل:</label>
-                <input type="text" id="fId" placeholder="أدخل بياناتك">
-                <button type="button" class="btn-main" onclick="sendOTPRequest()">طلب رمز استعادة</button>
-            </div>
-            <div id="step2" style="display:none;">
-                <p style="color:var(--success); font-size:0.8rem; text-align:center;">يرجى التحقق من وسيلة التواصل الخاصة بك</p>
-                <label>الرمز السري المتلقى:</label>
-                <input type="text" id="otp">
-                <label>كلمة السر الجديدة:</label>
-                <input type="password" id="nPass">
-                <button type="button" class="btn-main" onclick="confirmReset()">تغيير كلمة السر</button>
-            </div>
-            <button type="button" class="btn-link" style="display:block; margin:10px auto;" onclick="openModal('loginModal')">رجوع</button>
-        </div>
-    </div>
-
-    <!-- Order Modal -->
-    <div id="orderModal" class="modal-overlay">
-        <div class="modal-content">
-            <h2 id="svcName" style="text-align:center; color:var(--royal-blue)">طلب الخدمة</h2>
+            <h2 id="stitle" style="text-align:center; color: var(--royal-blue); margin-bottom: 20px;">طلب خدمة</h2>
             <form id="orderForm">
-                <input type="hidden" id="hSvc" name="mainService">
-                <label>النوع الفرعي:</label>
-                <select id="subSvc" name="subService"></select>
-                <label>العنوان أو تفاصيل إضافية:</label>
-                <textarea id="notes" name="notes" rows="3"></textarea>
+                <!-- تم تغيير الأسماء لتكون آمنة من الفلترة -->
+                <input type="hidden" name="category" id="h-service">
                 
-                <button type="submit" class="btn-main" id="orderBtn" style="background:var(--success)">إرسال الطلب للموقع</button>
-                <div class="inner-loader" id="orderLoader">جارِ تسجيل طلبك...</div>
-                <button type="button" class="btn-link" style="display:block; margin:10px auto;" onclick="closeAll()">إلغاء</button>
+                <label style="font-size: 0.8rem; font-weight: bold; color: #666;">نوع الخدمة الفرعي:</label>
+                <select name="sub_category" id="sub-service"></select>
+                
+                <label style="font-size: 0.8rem; font-weight: bold; color: #666;">المنطقة:</label>
+                <select name="area" id="u-loc" required>
+                    <option value="">اختر منطقتك...</option>
+                    <option>مركز البصرة</option><option>الزبير</option><option>شط العرب</option>
+                    <option>أبي الخصيب</option><option>القرنة</option><option>الفاو</option>
+                </select>
+                
+                <input type="tel" name="client_phone" id="u-phone" placeholder="رقم الهاتف (07XXXXXXXXX)" required>
+                <textarea name="request_details" id="u-desc" rows="3" placeholder="اكتب تفاصيل إضافية هنا..."></textarea>
+                
+                <button type="submit" class="btn-submit" id="submitBtn">تأكيد الإرسال 🚀</button>
+                <div id="loaderStatus" class="loading-spinner">جارِ الإرسال...</div>
+                
+                <button type="button" onclick="closeM()" style="background:none; border:none; color:#999; width:100%; margin-top:15px; cursor:pointer">إلغاء</button>
             </form>
         </div>
     </div>
 
     <script>
-        // رابط Formspree الخاص بك - تم التحديث للرابط الجديد
-        const FORMSPREE_URL = "https://formspree.io/f/xzdelngd"; 
+        // رابط Formspree الجديد الخاص بك
+        const FORMSPREE_ID = "mreqjepe";
+        const ACTION_URL = `https://formspree.io/f/${FORMSPREE_ID}`;
 
-        const services = [
-            { name: 'سباكة', icon: 'fa-faucet', bg: '#3b82f6', subs: ['مياه داخلية', 'تأسيس مجاري', 'مضخات', 'خزانات'] },
-            { name: 'كهرباء', icon: 'fa-bolt', bg: '#ef4444', subs: ['تأسيس كامل', 'توزيع أحمال', 'إنارة', 'بوردات'] },
-            { name: 'تكييف', icon: 'fa-wind', bg: '#06b6d4', subs: ['غسل سبلت', 'شحن غاز', 'تصليح كمبريسر'] },
-            { name: 'نجارة', icon: 'fa-hammer', bg: '#f59e0b', subs: ['تفكيك غرف', 'تصليح أبواب', 'تركيب مطابخ'] },
-            { name: 'كاميرات', icon: 'fa-video', bg: '#6366f1', subs: ['نصب منظومة', 'صيانة', 'ربط بالهاتف'] },
-            { name: 'تنظيف', icon: 'fa-broom', bg: '#10b981', subs: ['تنظيف منازل', 'جلي أرضيات', 'واجهات'] },
-            { name: 'نقل أثاث', icon: 'fa-truck-moving', bg: '#fb923c', subs: ['داخل المحافظة', 'بين المحافظات'] },
-            { name: 'بناء وترميم', icon: 'fa-trowel-bricks', bg: '#78350f', subs: ['بناء هيكل', 'لبخ', 'سيراميك'] },
-            { name: 'أجهزة منزلية', icon: 'fa-tv', bg: '#ec4899', subs: ['ثلاجات', 'غسالات', 'شاشات'] },
-            { name: 'مولدات', icon: 'fa-engine', bg: '#475569', subs: ['تصليح محرك', 'دينامو', 'بورد مولدة'] },
-            { name: 'المنيوم', icon: 'fa-window-maximize', bg: '#94a3b8', subs: ['شبابيك', 'مطابخ المنيوم'] },
-            { name: 'حدائق', icon: 'fa-leaf', bg: '#22c55e', subs: ['تصميم حدائق', 'قص ثيل', 'سقي'] },
-            { name: 'ستائر', icon: 'fa-scroll', bg: '#a855f7', subs: ['تركيب ستائر', 'غسل', 'تصليح سكة'] },
-            { name: 'حدادة', icon: 'fa-fire', bg: '#1e293b', subs: ['أبواب حديد', 'محجرات', 'مضلات'] },
-            { name: 'مكافحة حشرات', icon: 'fa-bug', bg: '#b91c1c', subs: ['نمل أبيض', 'قوارض', 'تعقيم'] },
-            { name: 'ستلايت', icon: 'fa-satellite-dish', bg: '#0ea5e9', subs: ['برمجة', 'تركيب طبق'] },
-            { name: 'ديكور وصباغة', icon: 'fa-paint-roller', bg: '#d946ef', subs: ['صبغ جدران', 'ورق جدران', 'جبسن بورد'] },
-            { name: 'عوازل أسطح', icon: 'fa-shield-halved', bg: '#4d7c0f', subs: ['شتايجر', 'لباد', 'إيبوكسي'] },
-            { name: 'فلاتر مياه', icon: 'fa-filter', bg: '#0369a1', subs: ['تبديل حشوات', 'نصب فلتر'] },
-            { name: 'صيانة مصاعد', icon: 'fa-elevator', bg: '#7c3aed', subs: ['صيانة شهرية', 'تصليح عطل'] },
-            { name: 'زجاج', icon: 'fa-gem', bg: '#38bdf8', subs: ['تبديل زجاج', 'مرايا'] },
-            { name: 'تأسيس غاز', icon: 'fa-fire-burner', bg: '#f97316', subs: ['منظومة غاز', 'تصليح طباخ'] }
+        const servicesData = [
+            { name: 'سباكة', icon: 'fa-faucet', bg: '#3b82f6', subs: ['تأسيس مياه', 'مضخات', 'مجاري'] },
+            { name: 'كهرباء', icon: 'fa-bolt-lightning', bg: '#ef4444', subs: ['تأسيس كهرباء', 'بوردات', 'إنارة'] },
+            { name: 'تكييف', icon: 'fa-wind', bg: '#06b6d4', subs: ['غسل سبلت', 'شحن غاز'] },
+            { name: 'أجهزة منزلية', icon: 'fa-blender', bg: '#8b5cf6', subs: ['غسالات', 'ثلاجات'] },
+            { name: 'نجارة', icon: '', bg: '#f59e0b', subs: ['تصليح أثاث', 'غرف نوم'] },
+            { name: 'حدادة', icon: 'fa-hammer', bg: '#64748b', subs: ['لحام عام', 'مظلات'] }, 
+            { name: 'كاميرات مراقبة', icon: 'fa-video', bg: '#f43f5e', subs: ['نصب منظومة', 'صيانة'] },
+            { name: 'بناء وتصميم', icon: 'fa-trowel-bricks', bg: '#78350f', subs: ['بناء هيكل', 'ترميم'] },
+            { name: 'صيانة سيارات', icon: 'fa-car-side', bg: '#0ea5e9', subs: ['ميكانيك', 'كهرباء'] },
+            { name: 'أصباغ وديكورات', icon: 'fa-paint-roller', bg: '#ec4899', subs: ['صبغ داخلي', 'ديكور'] },
+            { name: 'غسيل سيارات', icon: 'fa-car', bg: '#22d3ee', subs: ['غسل متنقل', 'تلميع'] }, 
+            { name: 'نقل أثاث', icon: 'fa-truck-moving', bg: '#fb923c', subs: ['داخل البصرة', 'تفكيك'] },
+            { name: 'حلاقة منزلية', icon: 'fa-scissors', bg: '#d946ef', subs: ['شعر ولحية'] },
+            { name: 'صيانة موبايل', icon: 'fa-mobile-screen', bg: '#6366f1', subs: ['تبديل شاشة', 'سوفتوير'] },
+            { name: 'رعاية كبار السن', icon: 'fa-heart-pulse', bg: '#ef4444', subs: ['مرافق صحي'] },
+            { name: 'تنظيف أثاث', icon: 'fa-couch', bg: '#a855f7', subs: ['قنفات وسجاد'] },
+            { name: 'مسواق وتوصيل', icon: 'fa-cart-shopping', bg: '#22c55e', subs: ['مسواق مخضر', 'توصيل'] },
+            { name: 'صيانة مولدات', icon: 'fa-gear', bg: '#facc15', subs: ['صيانة منزلية', 'تبديل دهن'] },
+            { name: 'حدائق', icon: 'fa-leaf', bg: '#10b981', subs: ['تنسيق حدائق', 'ثيل'] },
+            { name: 'دروس خصوصية', icon: 'fa-book-open', bg: '#3b82f6', subs: ['ابتدائي', 'متوسطة'] }
         ];
 
-        let user = null;
         const grid = document.getElementById('grid');
+        
+        servicesData.forEach(s => {
+            let iconMarkup = `<i class="fa-solid ${s.icon}" style="color: white; font-size: 1.5rem;"></i>`;
+            let extra = "";
 
-        // بناء الشبكة مع الحفاظ على الأيقونات الـ 22
-        services.forEach(s => {
-            const card = document.createElement('div');
-            card.className = 'service-card';
-            card.onclick = () => handleSvc(s);
-            card.innerHTML = `
-                <div class="icon-box" style="background: linear-gradient(135deg, ${s.bg}, ${s.bg}cc);">
-                    <i class="fa-solid ${s.icon}" style="color:white; font-size:1.4rem;"></i>
-                </div>
-                <h3>${s.name}</h3>
-            `;
-            grid.appendChild(card);
+            if(s.name === "نجارة") {
+                iconMarkup = `
+                    <div style="display: flex; gap: 5px; align-items: center; justify-content: center; color: white;">
+                        <i class="fa-solid fa-hammer" style="font-size: 1.2rem;"></i>
+                        <i class="fa-solid fa-screwdriver" style="font-size: 1.2rem;"></i>
+                    </div>`;
+            }
+            if(s.name === "صيانة مولدات") {
+                extra = '<i class="fa-solid fa-bolt" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; font-size:14px;"></i>';
+            }
+
+            grid.innerHTML += `
+                <div class="service-card" onclick="openM('${s.name}')">
+                    <div class="icon-box" style="background: ${s.bg}; box-shadow: 0 8px 15px ${s.bg}44;">
+                        ${iconMarkup}
+                        ${extra}
+                    </div>
+                    <h3>${s.name}</h3>
+                </div>`;
         });
 
         window.onload = () => { 
             setTimeout(() => { 
                 document.getElementById('splash').style.opacity = '0'; 
                 setTimeout(() => document.getElementById('splash').style.display = 'none', 800); 
-            }, 2000); 
+            }, 1800); 
         };
 
-        function openModal(id) { closeAll(); document.getElementById(id).style.display = 'flex'; }
-        function closeAll() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
-
-        const checkPhone = (p) => p.startsWith('07') && p.length === 11 && /^\d+$/.test(p);
-        const checkEmail = (e) => e.includes('@') && e.includes('.');
-        const checkPass = (p) => p.length >= 8 && /[A-Z]/.test(p) && /[a-z]/.test(p) && /[!@#$%^&*]/.test(p);
-
-        function handleSvc(s) {
-            if(!user) { openModal('loginModal'); return; }
-            document.getElementById('svcName').innerText = "طلب " + s.name;
-            document.getElementById('hSvc').value = s.name;
-            document.getElementById('subSvc').innerHTML = s.subs.map(x => `<option>${x}</option>`).join('');
-            openModal('orderModal');
+        function openM(n) { 
+            const s = servicesData.find(x => x.name === n); 
+            document.getElementById('stitle').innerText = "طلب خدمة " + n; 
+            document.getElementById('h-service').value = n; 
+            document.getElementById('sub-service').innerHTML = s.subs.map(opt => `<option>${opt}</option>`).join(''); 
+            document.getElementById('masterModal').style.display = 'flex'; 
         }
 
-        // إرسال البيانات إلى Formspree
-        async function sendToFormspree(formData, loaderId, btnId) {
-            const loader = document.getElementById(loaderId);
-            const btn = document.getElementById(btnId);
-            loader.style.display = 'block';
+        function closeM() { 
+            document.getElementById('masterModal').style.display = 'none'; 
+        }
+
+        // معالجة الإرسال الآمن
+        document.getElementById('orderForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const loader = document.getElementById('loaderStatus');
+            
+            // قفل الزر لمنع الإرسال المتكرر
+            btn.disabled = true;
             btn.style.display = 'none';
+            loader.style.display = 'block';
+
+            const formData = new FormData(e.target);
 
             try {
-                const response = await fetch(FORMSPREE_URL, {
+                const response = await fetch(ACTION_URL, {
                     method: 'POST',
                     body: formData,
                     headers: { 'Accept': 'application/json' }
                 });
-                return response.ok;
-            } catch (error) {
-                console.error(error);
-                return false;
-            } finally {
-                loader.style.display = 'none';
-                btn.style.display = 'block';
-            }
-        }
 
-        // تسجيل الدخول وإرسال المعلومات للإدارة
-        document.getElementById('loginForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const loginId = document.getElementById('loginId').value;
-            const formData = new FormData(e.target);
-            formData.append("type", "محاولة تسجيل دخول");
-
-            const success = await sendToFormspree(formData, 'loginLoader', 'loginBtn');
-            if(success) {
-                user = loginId;
-                closeAll();
-                alert("تم تسجيل الدخول وإرسال البيانات للإدارة بنجاح");
-            } else {
-                alert("حدث خطأ في الإرسال، يرجى المحاولة لاحقاً");
-            }
-        };
-
-        // إنشاء حساب + إرسال الرمز للمستخدم + إرسال المعلومات للإدارة
-        document.getElementById('registerForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const regId = document.getElementById('regId').value;
-            const pass = document.getElementById('regPass').value;
-            
-            if(!checkPhone(regId) && !checkEmail(regId)) {
-                document.getElementById('regIdErr').style.display = 'block';
-                return;
-            }
-            if(!checkPass(pass)) {
-                document.getElementById('regPassErr').style.display = 'block';
-                return;
-            }
-
-            const otp = Math.floor(100000 + Math.random() * 900000); 
-            const formData = new FormData(e.target);
-            formData.append("type", "تسجيل حساب جديد بالكامل");
-            formData.append("OTP_Sent_To_User", otp);
-
-            const success = await sendToFormspree(formData, 'regLoader', 'regBtn');
-            
-            if(success) {
-                // إرسال الرمز للمستخدم نفسه (واتساب أو إيميل)
-                if(checkPhone(regId)) {
-                    const msg = `أهلاً بك في خدماتي العراق. رمز التأكيد الخاص بك هو: ${otp}. يرجى استخدامه لتفعيل حسابك الجديد.`;
-                    window.open(`https://wa.me/964${regId.substring(1)}?text=${encodeURIComponent(msg)}`);
+                if (response.ok) {
+                    alert("✅ تم إرسال طلبك بنجاح! سنتواصل معك في أقرب وقت.");
+                    e.target.reset();
+                    closeM();
                 } else {
-                    const subject = "تفعيل حسابك في خدماتي العراق";
-                    const body = `رمز التأكيد الخاص بك هو: ${otp}`;
-                    window.open(`mailto:${regId}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+                    const data = await response.json();
+                    alert("⚠️ حدث خطأ في الإرسال: " + (data.errors ? data.errors[0].message : "يرجى المحاولة لاحقاً"));
                 }
-                alert("تم إرسال بيانات التسجيل للإدارة، وفتحنا لك وسيلة التواصل لتستلم رمز التأكيد الخاص بك");
-                openModal('loginModal');
-            } else {
-                alert("فشل في إرسال البيانات، يرجى التأكد من اتصال الإنترنت");
+            } catch (error) {
+                alert("❌ فشل الاتصال، تأكد من اتصالك بالإنترنت.");
+            } finally {
+                btn.disabled = false;
+                btn.style.display = 'block';
+                loader.style.display = 'none';
             }
         };
-
-        // طلب الخدمة وإرسالها للإدارة
-        document.getElementById('orderForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            formData.append("type", "طلب خدمة من مستخدم");
-            formData.append("userContact", user);
-
-            const success = await sendToFormspree(formData, 'orderLoader', 'orderBtn');
-            if(success) {
-                alert("تم إرسال طلبك للإدارة بنجاح، سنقوم بمعالجته فوراً");
-                closeAll();
-            } else {
-                alert("حدث خطأ أثناء إرسال الطلب");
-            }
-        };
-
-        function sendOTPRequest() {
-            alert("تم إرسال طلب استعادة للإدارة، سيتم مراجعة بياناتك وتزويدك بالرمز");
-            document.getElementById('step1').style.display = 'none';
-            document.getElementById('step2').style.display = 'block';
-        }
     </script>
 </body>
 </html>
