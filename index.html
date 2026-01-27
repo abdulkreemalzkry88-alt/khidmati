@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>خدماتي - البصرة الشامل</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-        :root { --royal-blue: #002366; --gold: #D4AF37; --white: #ffffff; --card-bg: rgba(255, 255, 255, 0.07); }
+        :root { --royal-blue: #002366; --gold: #D4AF37; --white: #ffffff; --card-bg: rgba(255, 255, 255, 0.05); }
         body { 
             font-family: 'Tajawal', sans-serif; margin: 0; padding: 0;
             background: radial-gradient(circle at top, var(--royal-blue), #020617);
@@ -16,44 +19,40 @@
         #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--royal-blue); z-index: 10000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s ease-in-out;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s;
         }
         .splash-logo { font-size: 3.5rem; font-weight: 900; color: var(--gold); animation: pulse 2s infinite; }
         .loader { width: 40px; height: 40px; border: 4px solid rgba(212, 175, 55, 0.2); border-top: 4px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } }
         header { padding: 50px 20px 20px; text-align: center; }
-        header h1 { font-size: 2.5rem; font-weight: 900; margin: 0; color: var(--gold); }
-        header p { opacity: 0.8; font-size: 1rem; margin-top: 5px; }
+        header h1 { font-size: 2.8rem; font-weight: 900; margin: 0; color: var(--gold); }
         .container { width: 95%; max-width: 1200px; margin: 0 auto; padding-bottom: 100px; }
         .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px; }
         @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
         .service-card { 
-            background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.2); 
-            border-radius: 20px; padding: 20px 10px; text-align: center; cursor: pointer; transition: 0.3s;
-            display: flex; flex-direction: column; align-items: center;
+            background: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid rgba(212, 175, 55, 0.2); 
+            border-radius: 22px; padding: 20px 10px; text-align: center; cursor: pointer; transition: 0.3s;
         }
-        .service-card:active { transform: scale(0.95); background: rgba(255, 255, 255, 0.1); }
         .icon-box { 
-            width: 65px; height: 65px; background: rgba(212, 175, 55, 0.12); border-radius: 18px; 
-            display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--gold); margin-bottom: 12px;
+            width: 70px; height: 70px; background: rgba(255, 255, 255, 0.03); 
+            border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; 
         }
         .service-card h3 { font-size: 1rem; margin: 0; font-weight: 700; color: #fff; }
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center; padding: 15px; }
         .modal-content { background: #fff; color: #333; border-radius: 25px; padding: 25px; width: 100%; max-width: 400px; }
-        input, select, textarea { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid #ddd; font-family: 'Tajawal'; font-size: 1rem; box-sizing: border-box; }
+        input, select, textarea { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid #ddd; font-family: 'Tajawal'; box-sizing: border-box; }
         .btn-submit { background: var(--royal-blue); color: white; border: none; padding: 16px; border-radius: 12px; width: 100%; font-size: 1.1rem; font-weight: 900; cursor: pointer; }
-        .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background-color: #25d366; color: white !important; border-radius: 50px; padding: 12px 20px; display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 9998; }
+        .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background-color: #25d366; color: white !important; border-radius: 50px; padding: 12px 20px; display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: bold; z-index: 9998; }
     </style>
 </head>
 <body>
-    <div id="splash"><div class="splash-logo">خِدْماتي</div><p>دليلك الشامل في البصرة</p><div class="loader"></div></div>
-    <header><h1>خِدْماتي <span>البصرة</span></h1><p>نخبة من الفنيين في خدمتك</p></header>
+    <div id="splash"><div class="splash-logo">خِدْماتي</div><p>البصرة الشامل</p><div class="loader"></div></div>
+    <header><h1>خِدْماتي <span>البصرة</span></h1><p>كل ما يحتاجه منزلك في مكان واحد</p></header>
     <div class="container"><div class="services-grid" id="grid"></div></div>
-    <a href="https://wa.me/9647716741488" class="whatsapp-float"><i class="fab fa-whatsapp"></i> مراسلة فورية</a>
+    <a href="https://wa.me/9647716741488" class="whatsapp-float"><i class="fab fa-whatsapp"></i> مراسلة واتساب</a>
     <div id="masterModal" class="modal-overlay">
         <div class="modal-content">
-            <h2 id="stitle" style="text-align:center; color: var(--royal-blue); margin-bottom: 15px;">طلب الخدمة</h2>
+            <h2 id="stitle" style="text-align:center; color: var(--royal-blue);">طلب خدمة</h2>
             <form id="orderForm">
                 <input type="hidden" name="الخدمة" id="h-service">
                 <select name="النوع" id="sub-service"></select>
@@ -61,56 +60,51 @@
                     <option value="">اختر منطقتك...</option>
                     <option>مركز البصرة</option><option>الزبير</option><option>شط العرب</option>
                     <option>أبي الخصيب</option><option>القرنة</option><option>الفاو</option>
-                    <option>الهارثة</option><option>سفوان</option>
                 </select>
                 <input type="tel" name="الهاتف" id="u-phone" placeholder="رقم الهاتف" required>
-                <textarea name="ملاحظات" id="u-desc" rows="3" placeholder="وصف المشكلة..."></textarea>
-                <button type="submit" class="btn-submit" id="submitBtn">إرسال الطلب 🚀</button>
-                <button type="button" onclick="closeM()" style="background:none; border:none; color:#777; width:100%; margin-top:10px; cursor:pointer">إغلاق</button>
+                <textarea name="ملاحظات" id="u-desc" rows="3" placeholder="تفاصيل الطلب..."></textarea>
+                <button type="submit" class="btn-submit" id="submitBtn">تأكيد الإرسال 🚀</button>
+                <button type="button" onclick="closeM()" style="background:none; border:none; color:#777; width:100%; margin-top:10px; cursor:pointer">إلغاء</button>
             </form>
         </div>
     </div>
 	<script>
         const servicesData = [
-            { name: 'سباكة', icon: 'water_drop', color: '#00d2ff', subs: ['تأسيس مياه', 'مضخات', 'مجاري'] },
-            { name: 'كهرباء', icon: 'bolt', color: '#ffea00', subs: ['تأسيس كهرباء', 'بوردات', 'إنارة'] },
-            { name: 'تكييف', icon: 'ac_unit', color: '#a5f3fc', subs: ['غسل سبلت', 'شحن غاز'] },
-            { name: 'أجهزة منزلية', icon: 'flatware', color: '#f8fafc', subs: ['غسالات', 'ثلاجات'] },
-            { name: 'نجارة', icon: 'handyman', color: '#fbbf24', subs: ['تصليح أثاث', 'غرف نوم'] },
-            { name: 'حدادة', icon: 'architecture', color: '#94a3b8', subs: ['لحام عام', 'مظلات وشبابيك'] },
+            { name: 'سباكة', icon: 'water_drop', color: '#00d2ff', subs: ['تأسيس مياه', 'مضخات'] },
+            { name: 'كهرباء', icon: 'bolt', color: '#ffea00', subs: ['تأسيس كهرباء', 'بوردات'] },
+            { name: 'تكييف', icon: 'mode_fan', color: '#a5f3fc', subs: ['غسل سبلت', 'شحن غاز'] },
+            { name: 'أجهزة منزلية', icon: 'settings_suggest', color: '#f8fafc', subs: ['غسالات', 'ثلاجات'] },
+            { name: 'نجارة', icon: 'carpenter', color: '#fbbf24', subs: ['تصليح أثاث', 'غرف نوم'] },
+            { name: 'حدادة', icon: 'hardware', color: '#94a3b8', subs: ['لحام عام', 'مظلات'] },
             { name: 'كاميرات مراقبة', icon: 'videocam', color: '#ef4444', subs: ['نصب منظومة', 'صيانة'] },
-            { name: 'بناء وتصميم', icon: 'home_work', color: '#fca5a5', subs: ['بناء هيكل', 'ترميم'] },
-            { name: 'صيانة سيارات', icon: 'directions_car', color: '#38bdf8', subs: ['ميكانيك', 'كهرباء سيارات'] },
-            { name: 'أصباغ وديكورات', icon: 'format_paint', color: '#ec4899', subs: ['صبغ داخلي', 'ديكور'] },
-            { name: 'غسيل سيارات', icon: 'auto_clean_mirror', color: '#22d3ee', subs: ['غسل متنقل', 'بولش'] }, 
+            { name: 'بناء وتصميم', icon: 'foundation', color: '#fca5a5', subs: ['بناء هيكل', 'ترميم'] },
+            { name: 'صيانة سيارات', icon: 'car_repair', color: '#38bdf8', subs: ['ميكانيك', 'كهرباء'] },
+            { name: 'أصباغ وديكورات', icon: 'format_paint', color: '#ec4899', subs: ['صبغ', 'ديكور'] },
+            { name: 'غسيل سيارات', icon: 'auto_clean_mirror', color: '#22d3ee', subs: ['غسل متنقل', 'تلميع'] },
             { name: 'نقل أثاث', icon: 'local_shipping', color: '#fb923c', subs: ['داخل البصرة', 'تفكيك'] },
-            { name: 'حلاقة منزلية', icon: 'content_cut', color: '#f472b6', subs: ['شعر ولحية'] },
-            { name: 'صيانة موبايل', icon: 'phonelink_setup', color: '#818cf8', subs: ['تبديل شاشة', 'سوفتوير'] },
-            { name: 'رعاية كبار السن', icon: 'volunteer_activism', color: '#f87171', subs: ['مرافق صحي'] },
+            { name: 'حلاقة منزلية', icon: 'content_cut', color: '#f472b6', subs: ['حلاقة منزلية'] },
+            { name: 'صيانة موبايل', icon: 'phonelink_setup', color: '#818cf8', subs: ['شاشات', 'سوفتوير'] },
+            { name: 'رعاية كبار السن', icon: 'elderly', color: '#f87171', subs: ['مرافق صحي'] },
             { name: 'تنظيف أثاث', icon: 'weekend', color: '#c084fc', subs: ['قنفات وسجاد'] },
-            { name: 'مسواق وتوصيل', icon: 'shopping_basket', color: '#4ade80', subs: ['مسواق مخضر', 'توصيل'] },
-            { name: 'صيانة مولدات', icon: 'settings_input_component', color: '#fbbf24', subs: ['صيانة منزلية', 'تبديل دهن'] },
-            { name: 'حدائق', icon: 'grass', color: '#2dd4bf', subs: ['ترتيب حدائق', 'ثيل'] },
-            { name: 'دروس خصوصية', icon: 'menu_book', color: '#60a5fa', subs: ['ابتدائي', 'متوسطة', 'إعدادي'] }
+            { name: 'مسواق وتوصيل', icon: 'shopping_cart', color: '#4ade80', subs: ['مسواق', 'توصيل'] },
+            { name: 'صيانة مولدات', icon: 'settings_input_component', color: '#fbbf24', subs: ['صيانة مولدة'] },
+            { name: 'حدائق', icon: 'precision_manufacturing', color: '#2dd4bf', subs: ['تنسيق حدائق'] },
+            { name: 'دروس خصوصية', icon: 'school', color: '#60a5fa', subs: ['ابتدائي', 'متوسطة'] }
         ];
-
-        // نحتاج لإضافة رابط مكتبة جوجل في الجزء العلوي من ملفك (داخل head)
-        // <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
         const grid = document.getElementById('grid');
         servicesData.forEach(s => {
             grid.innerHTML += `
                 <div class="service-card" onclick="openM('${s.name}')">
-                    <div class="icon-box" style="background: rgba(255,255,255,0.03); border: 1px solid ${s.color}44;">
-                        <span class="material-symbols-outlined" style="font-size: 2.2rem; color: ${s.color}; text-shadow: 0 0 10px ${s.color}66;">
+                    <div class="icon-box" style="border: 1px solid ${s.color}33;">
+                        <span class="material-symbols-outlined" style="font-size: 2.3rem; color: ${s.color}; text-shadow: 0 0 10px ${s.color}44;">
                             ${s.icon}
                         </span>
                     </div>
-                    <h3 style="color: #f8fafc; font-weight: 400;">${s.name}</h3>
+                    <h3>${s.name}</h3>
                 </div>`;
         });
 
-        // دوال التحكم
         window.onload = () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 800); }, 2000); };
         function openM(n) { const s = servicesData.find(x => x.name === n); document.getElementById('stitle').innerText = n; document.getElementById('h-service').value = n; document.getElementById('sub-service').innerHTML = s.subs.map(opt => `<option>${opt}</option>`).join(''); document.getElementById('masterModal').style.display = 'flex'; }
         function closeM() { document.getElementById('masterModal').style.display = 'none'; }
@@ -119,12 +113,10 @@
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             btn.innerText = "جاري الإرسال...";
-            const res = await fetch("https://formspree.io/f/xzdelngd", {
-                method: "POST", body: new FormData(this), headers: { 'Accept': 'application/json' }
-            });
+            const res = await fetch("https://formspree.io/f/xzdelngd", { method: "POST", body: new FormData(this), headers: { 'Accept': 'application/json' } });
             if (res.ok) { alert("✅ تم استلام طلبك!"); this.reset(); closeM(); } 
             else { alert("❌ خطأ."); }
-            btn.innerText = "إرسال الطلب 🚀";
+            btn.innerText = "تأكيد الإرسال 🚀";
         };
     </script>
 </body>
