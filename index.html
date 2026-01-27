@@ -97,13 +97,6 @@
         }
         .btn-link { background: none; border: none; color: var(--royal-blue); font-weight: bold; cursor: pointer; text-decoration: underline; font-size: 0.8rem; }
 
-        .whatsapp-float { 
-            position: fixed; bottom: 20px; left: 20px; background: #25d366; 
-            color: white !important; border-radius: 50px; padding: 12px 20px; 
-            display: flex; align-items: center; gap: 8px; text-decoration: none; 
-            font-weight: bold; z-index: 9998; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
         /* لودر التحميل داخل النوافذ */
         .inner-loader { display: none; text-align: center; padding: 10px; color: var(--royal-blue); }
     </style>
@@ -226,8 +219,8 @@
     </div>
 
     <script>
-        // رابط Formspree الخاص بك - ضع الرابط هنا
-        const FORMSPREE_URL = "https://formspree.io/f/mqaeavlo"; 
+        // رابط Formspree الخاص بك - تم التحديث للرابط الجديد
+        const FORMSPREE_URL = "https://formspree.io/f/xzdelngd"; 
 
         const services = [
             { name: 'سباكة', icon: 'fa-faucet', bg: '#3b82f6', subs: ['مياه داخلية', 'تأسيس مجاري', 'مضخات', 'خزانات'] },
@@ -257,7 +250,7 @@
         let user = null;
         const grid = document.getElementById('grid');
 
-        // بناء الشبكة
+        // بناء الشبكة مع الحفاظ على الأيقونات الـ 22
         services.forEach(s => {
             const card = document.createElement('div');
             card.className = 'service-card';
@@ -316,24 +309,24 @@
             }
         }
 
-        // تسجيل الدخول
+        // تسجيل الدخول وإرسال المعلومات للإدارة
         document.getElementById('loginForm').onsubmit = async (e) => {
             e.preventDefault();
             const loginId = document.getElementById('loginId').value;
             const formData = new FormData(e.target);
-            formData.append("type", "تسجيل دخول");
+            formData.append("type", "محاولة تسجيل دخول");
 
             const success = await sendToFormspree(formData, 'loginLoader', 'loginBtn');
             if(success) {
                 user = loginId;
                 closeAll();
-                alert("تم تسجيل الدخول وإبلاغ الإدارة");
+                alert("تم تسجيل الدخول وإرسال البيانات للإدارة بنجاح");
             } else {
-                alert("حدث خطأ في الإرسال، حاول ثانية");
+                alert("حدث خطأ في الإرسال، يرجى المحاولة لاحقاً");
             }
         };
 
-        // إنشاء حساب + إرسال الرمز للمستخدم نفسه
+        // إنشاء حساب + إرسال الرمز للمستخدم + إرسال المعلومات للإدارة
         document.getElementById('registerForm').onsubmit = async (e) => {
             e.preventDefault();
             const regId = document.getElementById('regId').value;
@@ -348,49 +341,48 @@
                 return;
             }
 
-            const otp = Math.floor(100000 + Math.random() * 900000); // توليد رمز عشوائي
+            const otp = Math.floor(100000 + Math.random() * 900000); 
             const formData = new FormData(e.target);
-            formData.append("type", "إنشاء حساب جديد");
-            formData.append("generatedOTP", otp);
+            formData.append("type", "تسجيل حساب جديد بالكامل");
+            formData.append("OTP_Sent_To_User", otp);
 
             const success = await sendToFormspree(formData, 'regLoader', 'regBtn');
             
             if(success) {
-                // توجيه الرمز للمستخدم نفسه
+                // إرسال الرمز للمستخدم نفسه (واتساب أو إيميل)
                 if(checkPhone(regId)) {
-                    const msg = `أهلاً بك في خدماتي العراق. رمز التأكيد الخاص بك هو: ${otp}. يرجى إدخاله في التطبيق لتفعيل الحساب.`;
+                    const msg = `أهلاً بك في خدماتي العراق. رمز التأكيد الخاص بك هو: ${otp}. يرجى استخدامه لتفعيل حسابك الجديد.`;
                     window.open(`https://wa.me/964${regId.substring(1)}?text=${encodeURIComponent(msg)}`);
                 } else {
-                    const subject = "رمز تفعيل حساب خدماتي العراق";
+                    const subject = "تفعيل حسابك في خدماتي العراق";
                     const body = `رمز التأكيد الخاص بك هو: ${otp}`;
                     window.open(`mailto:${regId}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
                 }
-                alert("تم إرسال بياناتك للموقع، ووصلك رمز التأكيد على وسيلة التواصل الخاصة بك");
+                alert("تم إرسال بيانات التسجيل للإدارة، وفتحنا لك وسيلة التواصل لتستلم رمز التأكيد الخاص بك");
                 openModal('loginModal');
             } else {
-                alert("فشل في الاتصال بالسيرفر");
+                alert("فشل في إرسال البيانات، يرجى التأكد من اتصال الإنترنت");
             }
         };
 
-        // طلب الخدمة
+        // طلب الخدمة وإرسالها للإدارة
         document.getElementById('orderForm').onsubmit = async (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
-            formData.append("type", "طلب خدمة");
+            formData.append("type", "طلب خدمة من مستخدم");
             formData.append("userContact", user);
 
             const success = await sendToFormspree(formData, 'orderLoader', 'orderBtn');
             if(success) {
-                alert("تم استلام طلبك بنجاح، سيتواصل معك المهني المختص قريباً");
+                alert("تم إرسال طلبك للإدارة بنجاح، سنقوم بمعالجته فوراً");
                 closeAll();
             } else {
-                alert("خطأ في إرسال الطلب");
+                alert("حدث خطأ أثناء إرسال الطلب");
             }
         };
 
-        // دوال وهمية للاستعادة (يمكن ربطها بنفس منطق Formspree)
         function sendOTPRequest() {
-            alert("تم إرسال طلب استعادة للموقع، سيتم تزويدك بالرمز قريباً");
+            alert("تم إرسال طلب استعادة للإدارة، سيتم مراجعة بياناتك وتزويدك بالرمز");
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
         }
