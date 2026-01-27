@@ -10,104 +10,107 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
         :root { 
-            --primary: #002366; 
-            --accent: #D4AF37; 
+            --primary-color: #002366; 
+            --accent-color: #D4AF37; 
             --bg-dark: #020617;
-            --glass: rgba(255, 255, 255, 0.08);
+            --card-glass: rgba(255, 255, 255, 0.08);
         }
         
         body { 
             font-family: 'Tajawal', sans-serif; margin: 0; padding: 0;
-            background: radial-gradient(circle at top, var(--primary), var(--bg-dark));
+            background: radial-gradient(circle at top, var(--primary-color), var(--bg-dark));
             color: #fff; min-height: 100vh; overflow-x: hidden;
+            user-select: none; -webkit-tap-highlight-color: transparent;
         }
-
-        /* نظام التسجيل */
-        #loginScreen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--primary); z-index: 20000;
-            display: flex; justify-content: center; align-items: center; padding: 20px;
-            box-sizing: border-box;
-        }
-        .login-card {
-            background: white; color: #333; padding: 35px 25px; border-radius: 30px;
-            width: 100%; max-width: 400px; text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-        .login-card h2 { color: var(--primary); margin-bottom: 5px; font-weight: 900; }
-        .login-card p { font-size: 0.9rem; color: #666; margin-bottom: 25px; }
 
         /* شاشة التحميل */
         #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--primary); z-index: 10000;
-            display: none; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s;
+            background: var(--primary-color); z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s;
         }
-        .loader { width: 45px; height: 45px; border: 4px solid rgba(212, 175, 55, 0.2); border-top: 4px solid var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px; }
+        .splash-logo { font-size: 3.5rem; font-weight: 900; color: var(--accent-color); animation: pulse 2s infinite; }
+        .loader { width: 45px; height: 45px; border: 4px solid rgba(212, 175, 55, 0.2); border-top: 4px solid var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px; }
+        
         @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
         header { padding: 50px 20px 30px; text-align: center; }
-        header h1 { font-size: 2.5rem; font-weight: 900; color: var(--accent); margin: 0; }
-        header p { opacity: 0.8; margin-top: 10px; }
+        header h1 { font-size: 3rem; font-weight: 900; margin: 0; color: var(--accent-color); letter-spacing: -1px; }
+        header h1 span { color: #fff; font-weight: 300; }
+        header p { opacity: 0.9; margin-top: 10px; font-size: 1.1rem; }
 
         .container { width: 92%; max-width: 1200px; margin: 0 auto; padding-bottom: 120px; }
         
-        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .services-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 18px; 
+            padding: 10px; 
+        }
         @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
 
         .service-card { 
-            background: var(--glass); backdrop-filter: blur(12px); border-radius: 24px; padding: 25px 10px; 
-            text-align: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s;
+            background: var(--card-glass); backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 24px; padding: 25px 15px; text-align: center; 
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .service-card:active { transform: scale(0.95); }
+        .service-card:active { transform: scale(0.92); background: rgba(255,255,255,0.15); }
 
-        .icon-box { width: 65px; height: 65px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; position: relative; }
-        .service-card h3 { font-size: 0.95rem; font-weight: 700; color: #fff; margin: 0; }
+        .icon-container { 
+            width: 65px; height: 65px; border-radius: 20px; display: flex; 
+            align-items: center; justify-content: center; margin: 0 auto 18px; 
+            position: relative; transition: 0.3s;
+        }
+        .service-card h3 { font-size: 1rem; margin: 0; font-weight: 700; color: #fff; }
 
-        /* نوافذ */
+        /* نافذة الطلب */
         .modal-overlay { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 15px;
+            background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; 
+            align-items: center; padding: 20px; backdrop-filter: blur(10px);
         }
-        .modal-body { background: white; color: #333; border-radius: 25px; padding: 25px; width: 100%; max-width: 400px; }
+        .modal-body { 
+            background: #fff; color: #1a1a1a; border-radius: 30px; padding: 30px; 
+            width: 100%; max-width: 420px; position: relative;
+            animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes modalIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
+        label { display: block; margin: 12px 5px 5px; font-weight: 700; font-size: 0.9rem; color: #444; }
         input, select, textarea { 
-            width: 100%; padding: 15px; margin: 8px 0; border-radius: 12px; 
+            width: 100%; padding: 15px; border-radius: 15px; 
             border: 2px solid #f0f0f0; font-family: 'Tajawal'; box-sizing: border-box; font-size: 1rem;
+            transition: 0.3s;
         }
-        .btn-main { background: var(--primary); color: white; border: none; padding: 16px; border-radius: 12px; width: 100%; font-size: 1.1rem; font-weight: 900; cursor: pointer; }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary-color); outline: none; background: #fafafa; }
 
-        .whatsapp-btn { position: fixed; bottom: 25px; left: 25px; background: #25d366; color: white !important; border-radius: 50px; padding: 12px 25px; display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: bold; z-index: 9000; }
+        .submit-btn { 
+            background: var(--primary-color); color: white; border: none; padding: 18px; 
+            border-radius: 15px; width: 100%; font-size: 1.2rem; font-weight: 900; 
+            cursor: pointer; margin-top: 20px; box-shadow: 0 10px 20px rgba(0,35,102,0.2);
+        }
+        
+        .whatsapp-btn { 
+            position: fixed; bottom: 30px; left: 30px; background: #25d366; 
+            color: white !important; border-radius: 50px; padding: 14px 28px; 
+            display: flex; align-items: center; gap: 12px; text-decoration: none; 
+            font-weight: 900; z-index: 9998; box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4);
+        }
     </style>
 </head>
 <body>
 
-    <!-- شاشة التسجيل -->
-    <div id="loginScreen">
-        <div class="login-card">
-            <h2>مرحباً بك في خدماتي</h2>
-            <p>يرجى تسجيل بياناتك للدخول إلى المنصة</p>
-            <form id="loginForm">
-                <input type="text" id="reg-name" placeholder="الاسم الثلاثي" required>
-                <input type="tel" id="reg-phone" placeholder="رقم الهاتف" required pattern="[0-9]{10,11}">
-                <select id="reg-city" required>
-                    <option value="">اختر المحافظة...</option>
-                    <option>البصرة</option><option>بغداد</option><option>أربيل</option><option>الموصل</option><option>النجف</option><option>كربلاء</option><option>ذي قار</option><option>ميسان</option>
-                </select>
-                <button type="submit" class="btn-main" style="margin-top:15px">دخول المنصة</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- شاشة التحميل -->
     <div id="splash">
-        <div style="font-size: 3rem; font-weight: 900; color: var(--accent);">خِدْماتي</div>
+        <div class="splash-logo">خِدْماتي</div>
+        <p style="color: var(--accent-color); font-weight: bold; letter-spacing: 2px;">الجمهورية العراقية</p>
         <div class="loader"></div>
     </div>
 
     <header>
         <h1>خِدْماتي <span>العراق</span></h1>
-        <p>المنصة الوطنية للخدمات المنزلية</p>
+        <p>المنصة الأولى لخدمات الصيانة والمنزل</p>
     </header>
 
     <div class="container">
@@ -115,137 +118,129 @@
     </div>
 
     <a href="https://wa.me/9647716741488" class="whatsapp-btn">
-        <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> مراسلة الدعم
+        <i class="fab fa-whatsapp" style="font-size: 1.8rem;"></i> مراسلة الدعم
     </a>
 
-    <!-- نافذة الطلب -->
     <div id="orderModal" class="modal-overlay">
         <div class="modal-body">
-            <h2 id="mTitle" style="text-align:center; color: var(--primary);">طلب خدمة</h2>
-            <form id="masterForm">
-                <!-- بيانات مخفية من التسجيل لترسل في الرسالة الطويلة -->
-                <input type="hidden" name="User_Full_Name" id="hidden-name">
-                <input type="hidden" name="User_Phone" id="hidden-phone">
-                <input type="hidden" name="User_City" id="hidden-city">
-                <input type="hidden" name="Service_Type" id="hidden-service">
-
-                <label style="font-weight: bold; font-size: 0.9rem;">الخدمة الفرعية:</label>
-                <select name="Detailed_Service" id="sub-list"></select>
-
-                <label style="font-weight: bold; font-size: 0.9rem;">وصف المشكلة:</label>
-                <textarea name="Customer_Notes" rows="3" placeholder="اكتب تفاصيل إضافية هنا..."></textarea>
+            <h2 id="modalTitle" style="text-align:center; color: var(--primary-color); margin-top:0;">طلب الخدمة</h2>
+            <form id="finalForm">
+                <input type="hidden" name="service_main" id="input-main">
                 
-                <button type="submit" class="btn-main" id="submitBtn">تأكيد إرسال الطلب 🚀</button>
-                <div id="loadStatus" style="display:none; text-align:center; padding:10px; color:var(--primary); font-weight:bold">جارِ معالجة طلبك...</div>
+                <label>اختر الخدمة المطلوبة:</label>
+                <select name="service_sub" id="input-sub"></select>
                 
-                <button type="button" onclick="closeModal()" style="background:none; border:none; color:#999; width:100%; margin-top:10px; cursor:pointer">رجوع</button>
+                <label>المحافظة / المنطقة:</label>
+                <select name="user_city" id="input-city" required>
+                    <option value="">اختر موقعك...</option>
+                    <optgroup label="البصرة">
+                        <option>البصرة - المركز</option><option>البصرة - الزبير</option><option>البصرة - شط العرب</option>
+                    </optgroup>
+                    <optgroup label="المحافظات الأخرى">
+                        <option>بغداد</option><option>أربيل</option><option>الموصل</option>
+                        <option>النجف</option><option>كربلاء</option><option>ذي قار</option>
+                        <option>ميسان</option><option>بابل</option>
+                    </optgroup>
+                </select>
+                
+                <label>رقم التواصل:</label>
+                <input type="tel" name="user_phone" placeholder="07XXXXXXXXX" required pattern="[0-9]{10,11}">
+                
+                <label>ملاحظات إضافية:</label>
+                <textarea name="user_notes" rows="2" placeholder="مثال: عنوان المنزل أو موعد محدد..."></textarea>
+                
+                <button type="submit" class="submit-btn" id="btnAction">تأكيد الطلب 🚀</button>
+                <div id="sendingTxt" style="display:none; text-align:center; padding:15px; font-weight:bold; color:var(--primary-color)">جارِ الإرسال...</div>
+                
+                <button type="button" onclick="closeModal()" style="background:none; border:none; color:#bbb; width:100%; margin-top:15px; cursor:pointer; font-weight:bold;">إغلاق</button>
             </form>
         </div>
     </div>
 
     <script>
-        const FORMSPREE_ID = "mreqjepe";
-        const ACTION_URL = `https://formspree.io/f/${FORMSPREE_ID}`;
+        const FORMSPREE_KEY = "mreqjepe";
+        const ENDPOINT = `https://formspree.io/f/${FORMSPREE_KEY}`;
 
-        const services = [
-            { name: 'سباكة', icon: 'fa-faucet', bg: '#2563eb', subs: ['تصليح أنابيب', 'مضخات', 'مجاري'] },
-            { name: 'كهرباء', icon: 'fa-bolt-lightning', bg: '#dc2626', subs: ['تأسيس كامل', 'صيانة أعطال', 'إنارة'] },
-            { name: 'تكييف', icon: 'fa-snowflake', bg: '#0891b2', subs: ['غسل سبلت', 'شحن غاز'] },
-            { name: 'نجارة', icon: '', bg: '#d97706', subs: ['تصليح أثاث', 'غرف نوم'] },
-            { name: 'حدادة', icon: 'fa-hammer', bg: '#475569', subs: ['لحام عام', 'مظلات'] },
-            { name: 'أجهزة منزلية', icon: 'fa-blender', bg: '#7c3aed', subs: ['غسالات', 'ثلاجات'] },
-            { name: 'كاميرات', icon: 'fa-video', bg: '#e11d48', subs: ['نصب منظومة', 'صيانة'] },
-            { name: 'بناء وترميم', icon: 'fa-trowel-bricks', bg: '#92400e', subs: ['بناء هيكل', 'ترميم'] },
-            { name: 'صيانة سيارات', icon: 'fa-car-wrench', bg: '#0284c7', subs: ['ميكانيك', 'كهرباء'] },
-            { name: 'أصباغ', icon: 'fa-paint-roller', bg: '#db2777', subs: ['صبغ جدران', 'ديكور'] },
-            { name: 'نقل أثاث', icon: 'fa-truck-ramp-box', bg: '#ea580c', subs: ['نقل داخلي', 'تفكيك'] },
-            { name: 'تنظيف', icon: 'fa-broom', bg: '#059669', subs: ['منازل', 'سجاد'] },
-            { name: 'حلاقة', icon: 'fa-scissors', bg: '#c026d3', subs: ['رجال', 'أطفال'] },
-            { name: 'مولدات', icon: 'fa-gears', bg: '#ca8a04', subs: ['صيانة منزلية', 'تبديل دهن'] },
-            { name: 'توصيل', icon: 'fa-cart-shopping', bg: '#16a34a', subs: ['توصيل طلبات', 'مسواق'] },
-            { name: 'حدائق', icon: 'fa-seedling', bg: '#15803d', subs: ['تنسيق حدائق', 'ثيل'] }
+        const IraqServices = [
+            { name: 'سباكة', icon: 'fa-faucet', bg: '#2563eb', subs: ['تصليح أنابيب', 'نصب مضخات', 'تنظيف مجاري'] },
+            { name: 'كهرباء', icon: 'fa-bolt-lightning', bg: '#dc2626', subs: ['تأسيس كامل', 'صيانة أعطال', 'نصب إنارة'] },
+            { name: 'تكييف وتبريد', icon: 'fa-snowflake', bg: '#0891b2', subs: ['غسل سبلت', 'شحن غاز', 'تصليح كمبريسور'] },
+            { name: 'نجارة', icon: '', bg: '#d97706', subs: ['تصليح أثاث', 'غرف نوم', 'أبواب خشب'] },
+            { name: 'حدادة', icon: 'fa-hammer', bg: '#475569', subs: ['لحام عام', 'عمل مظلات', 'أبواب حديد'] },
+            { name: 'أجهزة منزلية', icon: 'fa-blender', bg: '#7c3aed', subs: ['غسالات', 'ثلاجات', 'أفران'] },
+            { name: 'كاميرات مراقبة', icon: 'fa-video', bg: '#e11d48', subs: ['نصب منظومة', 'برمجة وصيانة'] },
+            { name: 'بناء وترميم', icon: 'fa-trowel-bricks', bg: '#92400e', subs: ['بناء هيكل', 'لبخ وسيراميك', 'ترميم عام'] },
+            { name: 'صيانة سيارات', icon: 'fa-car-wrench', bg: '#0284c7', subs: ['ميكانيك', 'كهرباء سيارات', 'فحص حاسبة'] },
+            { name: 'أصباغ وديكور', icon: 'fa-paint-roller', bg: '#db2777', subs: ['صبغ جدران', 'ورق جدران', 'جبس بورد'] },
+            { name: 'نقل أثاث', icon: 'fa-truck-ramp-box', bg: '#ea580c', subs: ['نقل داخل المدينة', 'تفكيك وتغليف'] },
+            { name: 'تنظيف شامل', icon: 'fa-broom', bg: '#059669', subs: ['تنظيف منازل', 'جلي أرضيات', 'غسل قنفات'] },
+            { name: 'حلاقة منزلية', icon: 'fa-scissors', bg: '#c026d3', subs: ['حلاقة رجال', 'أطفال'] },
+            { name: 'صيانة مولدات', icon: 'fa-gears', bg: '#ca8a04', subs: ['صيانة منزلية', 'تبديل فلاتر'] },
+            { name: 'توصيل ومسواق', icon: 'fa-cart-flatbed-suitcases', bg: '#16a34a', subs: ['توصيل طلبات', 'مسواق مخضر'] },
+            { name: 'حدائق وزراعة', icon: 'fa-seedling', bg: '#15803d', subs: ['تنسيق حدائق', 'نصب ثيل'] }
         ];
 
-        // معالجة التسجيل
-        document.getElementById('loginForm').onsubmit = (e) => {
-            e.preventDefault();
-            const userData = {
-                name: document.getElementById('reg-name').value,
-                phone: document.getElementById('reg-phone').value,
-                city: document.getElementById('reg-city').value
-            };
-            localStorage.setItem('user_khidmati', JSON.stringify(userData));
-            
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('splash').style.display = 'flex';
-            setTimeout(() => { document.getElementById('splash').style.display = 'none'; }, 1500);
-        };
-
-        // بناء الشبكة
         const grid = document.getElementById('mainGrid');
-        services.forEach(s => {
-            let iconMarkup = `<i class="fa-solid ${s.icon}" style="color:white; font-size:1.6rem"></i>`;
-            if(s.name === 'نجارة') iconMarkup = '<div style="color:white"><i class="fa-solid fa-hammer"></i> <i class="fa-solid fa-screwdriver"></i></div>';
-            
+        
+        IraqServices.forEach(s => {
+            let iconCode = `<i class="fa-solid ${s.icon}" style="color:white; font-size:1.6rem"></i>`;
+            if(s.name === 'نجارة') {
+                iconCode = '<div style="color:white"><i class="fa-solid fa-hammer"></i> <i class="fa-solid fa-screwdriver"></i></div>';
+            }
+
             grid.innerHTML += `
                 <div class="service-card" onclick="openModal('${s.name}')">
-                    <div class="icon-box" style="background:${s.bg}; box-shadow: 0 10px 20px ${s.bg}55">${iconMarkup}</div>
+                    <div class="icon-container" style="background:${s.bg}; box-shadow: 0 10px 20px ${s.bg}55">
+                        ${iconCode}
+                    </div>
                     <h3>${s.name}</h3>
                 </div>`;
         });
 
+        window.onload = () => { 
+            setTimeout(() => { 
+                document.getElementById('splash').style.opacity = '0'; 
+                setTimeout(() => document.body.removeChild(document.getElementById('splash')), 800); 
+            }, 2000); 
+        };
+
         function openModal(name) {
-            const s = services.find(x => x.name === name);
-            const user = JSON.parse(localStorage.getItem('user_khidmati'));
-            
-            document.getElementById('mTitle').innerText = "طلب " + name;
-            document.getElementById('hidden-service').value = name;
-            document.getElementById('sub-list').innerHTML = s.subs.map(v => `<option>${v}</option>`).join('');
-            
-            // ملء البيانات المخفية من التسجيل لتصلك في الرسالة
-            document.getElementById('hidden-name').value = user.name;
-            document.getElementById('hidden-phone').value = user.phone;
-            document.getElementById('hidden-city').value = user.city;
-            
+            const s = IraqServices.find(x => x.name === name);
+            document.getElementById('modalTitle').innerText = "طلب " + name;
+            document.getElementById('input-main').value = name;
+            document.getElementById('input-sub').innerHTML = s.subs.map(v => `<option>${v}</option>`).join('');
             document.getElementById('orderModal').style.display = 'flex';
         }
 
         function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
 
-        // إرسال الرسالة الطويلة المنظمة
-        document.getElementById('masterForm').onsubmit = async (e) => {
+        document.getElementById('finalForm').onsubmit = async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            const load = document.getElementById('loadStatus');
+            const btn = document.getElementById('btnAction');
+            const txt = document.getElementById('sendingTxt');
             
             btn.style.display = 'none';
-            load.style.display = 'block';
+            txt.style.display = 'block';
 
             try {
-                const res = await fetch(ACTION_URL, {
+                const res = await fetch(ENDPOINT, {
                     method: 'POST',
                     body: new FormData(e.target),
                     headers: { 'Accept': 'application/json' }
                 });
 
                 if (res.ok) {
-                    alert("✅ تم إرسال طلبك بنجاح! ستصلك مكالمة قريباً لتأكيد الموعد.");
+                    alert("✅ تم استلام طلبك في 'خدماتي العراق' بنجاح! سنتصل بك قريباً.");
+                    e.target.reset();
                     closeModal();
                 } else {
-                    alert("⚠️ حدث خطأ في النظام، يرجى المحاولة لاحقاً.");
+                    alert("⚠️ هناك مشكلة في الإرسال، جرب مرة أخرى.");
                 }
             } catch {
-                alert("❌ فشل الاتصال بالإنترنت.");
+                alert("❌ خطأ في الاتصال بالإنترنت.");
             } finally {
                 btn.style.display = 'block';
-                load.style.display = 'none';
-            }
-        };
-
-        // التحقق من التسجيل المسبق
-        window.onload = () => {
-            if(localStorage.getItem('user_khidmati')) {
-                document.getElementById('loginScreen').style.display = 'none';
+                txt.style.display = 'none';
             }
         };
     </script>
