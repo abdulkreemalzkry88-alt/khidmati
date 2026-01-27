@@ -75,12 +75,10 @@
             { name: 'تكييف', icon: 'fa-wind', bg: '#06b6d4', subs: ['غسل سبلت', 'شحن غاز'] },
             { name: 'أجهزة منزلية', icon: 'fa-blender', bg: '#8b5cf6', subs: ['غسالات', 'ثلاجات'] },
             
-            // النجارة: مطرقة مع إضافة منشار برمجياً
-            { name: 'نجارة', icon: 'fa-hammer', bg: '#f59e0b', subs: ['تصليح أثاث', 'غرف نوم'] },
+            // النجارة: سنترك الأيقونة فارغة هنا لنرسمها في الأسفل يدوياً
+            { name: 'نجارة', icon: '', bg: '#f59e0b', subs: ['تصليح أثاث', 'غرف نوم'] },
             
-            // الحدادة: تم تغيير الكود لضمان الظهور (مطرقة حداد وسندان)
-            { name: 'حدادة', icon: 'fa-screwdriver-wrench', bg: '#64748b', subs: ['لحام عام', 'مظلات'] }, 
-            
+            { name: 'حدادة', icon: 'fa-hammer', bg: '#64748b', subs: ['لحام عام', 'مظلات'] }, 
             { name: 'كاميرات مراقبة', icon: 'fa-video', bg: '#f43f5e', subs: ['نصب منظومة', 'صيانة'] },
             { name: 'بناء وتصميم', icon: 'fa-trowel-bricks', bg: '#78350f', subs: ['بناء هيكل', 'ترميم'] },
             { name: 'صيانة سيارات', icon: 'fa-car-side', bg: '#0ea5e9', subs: ['ميكانيك', 'كهرباء'] },
@@ -92,28 +90,28 @@
             { name: 'رعاية كبار السن', icon: 'fa-heart-pulse', bg: '#ef4444', subs: ['مرافق صحي'] },
             { name: 'تنظيف أثاث', icon: 'fa-couch', bg: '#a855f7', subs: ['قنفات وسجاد'] },
             { name: 'مسواق وتوصيل', icon: 'fa-cart-shopping', bg: '#22c55e', subs: ['مسواق مخضر', 'توصيل'] },
-            
-            // صيانة المولدات (ترس مع صعقة بيضاء)
             { name: 'صيانة مولدات', icon: 'fa-gear', bg: '#facc15', subs: ['صيانة منزلية', 'تبديل دهن'] },
-            
             { name: 'حدائق واللاندسكيب', icon: 'fa-leaf', bg: '#10b981', subs: ['تنسيق حدائق', 'ثيل'] },
             { name: 'دروس خصوصية', icon: 'fa-book-open', bg: '#3b82f6', subs: ['ابتدائي', 'متوسطة'] }
         ];
 
         const grid = document.getElementById('grid');
         servicesData.forEach(s => {
+            let innerContent = `<i class="fa-solid ${s.icon}" style="color: white; font-size: 1.5rem;"></i>`;
             let extra = "";
-            let customSize = "1.5rem";
 
-            // إضافة منشار للنجارة
+            // تعديل النجارة: وضع المنشار والمطرقة جنباً إلى جنب
             if(s.name === "نجارة") {
-                extra = '<i class="fa-solid fa-scissors" style="position:absolute; bottom:2px; right:2px; color:white; font-size:10px; transform: rotate(90deg);"></i>';
+                innerContent = `
+                    <div style="display: flex; gap: 5px; align-items: center; justify-content: center; color: white;">
+                        <i class="fa-solid fa-hammer" style="font-size: 1.3rem;"></i>
+                        <i class="fa-solid fa-saw" style="font-size: 1.3rem;"></i>
+                    </div>`;
             }
 
-            // تعديل الحدادة برمجياً (رسم السندان يدوياً لضمان ظهوره)
+            // تعديل الحدادة لضمان الظهور مع "سندان" برمجياً
             if(s.name === "حدادة") {
-                s.icon = "fa-hammer"; // أيقونة مضمونة
-                extra = '<div style="position:absolute; bottom:12px; width:15px; height:8px; background:white; border-radius:2px;"></div>';
+                extra = '<div style="position:absolute; bottom:15px; width:18px; height:8px; background:white; border-radius:2px 2px 5px 5px;"></div>';
             }
 
             if(s.name === "غسيل سيارات") {
@@ -121,14 +119,14 @@
             }
             
             if(s.name === "صيانة مولدات") {
+                innerContent = `<i class="fa-solid fa-gear" style="color: white; font-size: 2.3rem;"></i>`;
                 extra = '<i class="fa-solid fa-bolt" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; font-size:16px;"></i>';
-                customSize = "2.3rem"; 
             }
 
             grid.innerHTML += `
                 <div class="service-card" onclick="openM('${s.name}')" style="background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.05);">
-                    <div class="icon-box" style="background: ${s.bg}; box-shadow: 0 8px 20px ${s.bg}66; width: 62px; height: 62px; border-radius: 18px; position:relative; overflow:visible;">
-                        <i class="fa-solid ${s.icon}" style="color: white; font-size: ${customSize};"></i>
+                    <div class="icon-box" style="background: ${s.bg}; box-shadow: 0 8px 20px ${s.bg}66; width: 62px; height: 62px; border-radius: 18px; position:relative; display: flex; align-items: center; justify-content: center;">
+                        ${innerContent}
                         ${extra}
                     </div>
                     <h3 style="color: #f8fafc; font-size: 0.9rem; margin-top: 10px;">${s.name}</h3>
