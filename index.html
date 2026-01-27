@@ -3,263 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>خدماتي - البصرة الشامل</title>
+    <title>خدماتي العراق - المنصة الشاملة</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
         :root { 
-            --royal-blue: #002366; 
-            --gold: #D4AF37; 
-            --white: #ffffff; 
-            --card-bg: rgba(30, 41, 59, 0.8); 
-            --success: #22c55e;
+            --primary: #002366; 
+            --accent: #D4AF37; 
+            --bg-dark: #020617;
+            --glass: rgba(255, 255, 255, 0.08);
         }
         
         body { 
             font-family: 'Tajawal', sans-serif; margin: 0; padding: 0;
-            background: radial-gradient(circle at top, var(--royal-blue), #020617);
-            color: var(--white); min-height: 100vh; overflow-x: hidden;
-            user-select: none; -webkit-tap-highlight-color: transparent;
+            background: radial-gradient(circle at top, var(--primary), var(--bg-dark));
+            color: #fff; min-height: 100vh; overflow-x: hidden;
         }
+
+        /* نظام التسجيل */
+        #loginScreen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--primary); z-index: 20000;
+            display: flex; justify-content: center; align-items: center; padding: 20px;
+            box-sizing: border-box;
+        }
+        .login-card {
+            background: white; color: #333; padding: 35px 25px; border-radius: 30px;
+            width: 100%; max-width: 400px; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .login-card h2 { color: var(--primary); margin-bottom: 5px; font-weight: 900; }
+        .login-card p { font-size: 0.9rem; color: #666; margin-bottom: 25px; }
 
         /* شاشة التحميل */
         #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--royal-blue); z-index: 10000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s;
+            background: var(--primary); z-index: 10000;
+            display: none; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s;
         }
-        .splash-logo { font-size: 3.5rem; font-weight: 900; color: var(--gold); animation: pulse 2s infinite; }
-        .loader { width: 40px; height: 40px; border: 4px solid rgba(212, 175, 55, 0.2); border-top: 4px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px; }
-        
+        .loader { width: 45px; height: 45px; border: 4px solid rgba(212, 175, 55, 0.2); border-top: 4px solid var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-        header { padding: 60px 20px 20px; text-align: center; }
-        header h1 { font-size: 2.8rem; font-weight: 900; margin: 0; color: var(--gold); }
-        header span { color: #fff; font-weight: 400; font-size: 1.5rem; display: block; }
-        header p { opacity: 0.8; margin-top: 5px; }
+        header { padding: 50px 20px 30px; text-align: center; }
+        header h1 { font-size: 2.5rem; font-weight: 900; color: var(--accent); margin: 0; }
+        header p { opacity: 0.8; margin-top: 10px; }
 
-        .container { width: 95%; max-width: 1200px; margin: 0 auto; padding-bottom: 120px; }
+        .container { width: 92%; max-width: 1200px; margin: 0 auto; padding-bottom: 120px; }
         
-        .services-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 15px; 
-            padding: 10px; 
-        }
+        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
 
         .service-card { 
-            background: var(--card-bg); backdrop-filter: blur(15px); 
-            border: 1px solid rgba(212, 175, 55, 0.1); 
-            border-radius: 22px; padding: 20px 10px; text-align: center; 
-            cursor: pointer; transition: 0.3s;
+            background: var(--glass); backdrop-filter: blur(12px); border-radius: 24px; padding: 25px 10px; 
+            text-align: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s;
         }
         .service-card:active { transform: scale(0.95); }
 
-        .icon-box { 
-            width: 65px; height: 65px; border-radius: 18px; display: flex; 
-            align-items: center; justify-content: center; margin: 0 auto 15px; 
-            position: relative;
-        }
-        .service-card h3 { font-size: 0.95rem; margin: 0; font-weight: 700; color: #fff; }
+        .icon-box { width: 65px; height: 65px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; position: relative; }
+        .service-card h3 { font-size: 0.95rem; font-weight: 700; color: #fff; margin: 0; }
 
-        /* النوافذ المنبثقة */
+        /* نوافذ */
         .modal-overlay { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; 
-            align-items: center; padding: 15px; backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 15px;
         }
-        .modal-content { 
-            background: #fff; color: #333; border-radius: 25px; padding: 25px; 
-            width: 100%; max-width: 400px; position: relative;
-            animation: slideUp 0.4s ease-out;
-        }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-body { background: white; color: #333; border-radius: 25px; padding: 25px; width: 100%; max-width: 400px; }
 
         input, select, textarea { 
-            width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; 
-            border: 1.5px solid #eee; font-family: 'Tajawal'; box-sizing: border-box; font-size: 1rem;
+            width: 100%; padding: 15px; margin: 8px 0; border-radius: 12px; 
+            border: 2px solid #f0f0f0; font-family: 'Tajawal'; box-sizing: border-box; font-size: 1rem;
         }
-        input:focus { border-color: var(--royal-blue); outline: none; }
+        .btn-main { background: var(--primary); color: white; border: none; padding: 16px; border-radius: 12px; width: 100%; font-size: 1.1rem; font-weight: 900; cursor: pointer; }
 
-        .btn-submit { 
-            background: var(--royal-blue); color: white; border: none; padding: 16px; 
-            border-radius: 12px; width: 100%; font-size: 1.1rem; font-weight: 900; 
-            cursor: pointer; margin-top: 10px; transition: 0.3s;
-        }
-        .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
-        
-        .loading-spinner { display: none; text-align: center; margin-top: 15px; color: var(--royal-blue); font-weight: bold; }
-
-        .whatsapp-float { 
-            position: fixed; bottom: 25px; left: 25px; background: #25d366; 
-            color: white !important; border-radius: 50px; padding: 12px 25px; 
-            display: flex; align-items: center; gap: 10px; text-decoration: none; 
-            font-weight: bold; z-index: 9998; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-        }
+        .whatsapp-btn { position: fixed; bottom: 25px; left: 25px; background: #25d366; color: white !important; border-radius: 50px; padding: 12px 25px; display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: bold; z-index: 9000; }
     </style>
 </head>
 <body>
 
+    <!-- شاشة التسجيل -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <h2>مرحباً بك في خدماتي</h2>
+            <p>يرجى تسجيل بياناتك للدخول إلى المنصة</p>
+            <form id="loginForm">
+                <input type="text" id="reg-name" placeholder="الاسم الثلاثي" required>
+                <input type="tel" id="reg-phone" placeholder="رقم الهاتف" required pattern="[0-9]{10,11}">
+                <select id="reg-city" required>
+                    <option value="">اختر المحافظة...</option>
+                    <option>البصرة</option><option>بغداد</option><option>أربيل</option><option>الموصل</option><option>النجف</option><option>كربلاء</option><option>ذي قار</option><option>ميسان</option>
+                </select>
+                <button type="submit" class="btn-main" style="margin-top:15px">دخول المنصة</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- شاشة التحميل -->
     <div id="splash">
-        <div class="splash-logo">خِدْماتي</div>
-        <p style="color: var(--gold);">البصرة الشامل</p>
+        <div style="font-size: 3rem; font-weight: 900; color: var(--accent);">خِدْماتي</div>
         <div class="loader"></div>
     </div>
 
     <header>
-        <h1>خِدْماتي <span>البصرة</span></h1>
-        <p>كل ما يحتاجه منزلك في مكان واحد</p>
+        <h1>خِدْماتي <span>العراق</span></h1>
+        <p>المنصة الوطنية للخدمات المنزلية</p>
     </header>
 
     <div class="container">
-        <div class="services-grid" id="grid"></div>
+        <div class="services-grid" id="mainGrid"></div>
     </div>
 
-    <a href="https://wa.me/9647716741488" class="whatsapp-float">
-        <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> مراسلة واتساب
+    <a href="https://wa.me/9647716741488" class="whatsapp-btn">
+        <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> مراسلة الدعم
     </a>
 
-    <!-- نافذة الطلب الموحدة -->
-    <div id="masterModal" class="modal-overlay">
-        <div class="modal-content">
-            <h2 id="stitle" style="text-align:center; color: var(--royal-blue); margin-bottom: 20px;">طلب خدمة</h2>
-            <form id="orderForm">
-                <!-- تم تغيير الأسماء لتكون آمنة من الفلترة -->
-                <input type="hidden" name="category" id="h-service">
+    <!-- نافذة الطلب -->
+    <div id="orderModal" class="modal-overlay">
+        <div class="modal-body">
+            <h2 id="mTitle" style="text-align:center; color: var(--primary);">طلب خدمة</h2>
+            <form id="masterForm">
+                <!-- بيانات مخفية من التسجيل لترسل في الرسالة الطويلة -->
+                <input type="hidden" name="User_Full_Name" id="hidden-name">
+                <input type="hidden" name="User_Phone" id="hidden-phone">
+                <input type="hidden" name="User_City" id="hidden-city">
+                <input type="hidden" name="Service_Type" id="hidden-service">
+
+                <label style="font-weight: bold; font-size: 0.9rem;">الخدمة الفرعية:</label>
+                <select name="Detailed_Service" id="sub-list"></select>
+
+                <label style="font-weight: bold; font-size: 0.9rem;">وصف المشكلة:</label>
+                <textarea name="Customer_Notes" rows="3" placeholder="اكتب تفاصيل إضافية هنا..."></textarea>
                 
-                <label style="font-size: 0.8rem; font-weight: bold; color: #666;">نوع الخدمة الفرعي:</label>
-                <select name="sub_category" id="sub-service"></select>
+                <button type="submit" class="btn-main" id="submitBtn">تأكيد إرسال الطلب 🚀</button>
+                <div id="loadStatus" style="display:none; text-align:center; padding:10px; color:var(--primary); font-weight:bold">جارِ معالجة طلبك...</div>
                 
-                <label style="font-size: 0.8rem; font-weight: bold; color: #666;">المنطقة:</label>
-                <select name="area" id="u-loc" required>
-                    <option value="">اختر منطقتك...</option>
-                    <option>مركز البصرة</option><option>الزبير</option><option>شط العرب</option>
-                    <option>أبي الخصيب</option><option>القرنة</option><option>الفاو</option>
-                </select>
-                
-                <input type="tel" name="client_phone" id="u-phone" placeholder="رقم الهاتف (07XXXXXXXXX)" required>
-                <textarea name="request_details" id="u-desc" rows="3" placeholder="اكتب تفاصيل إضافية هنا..."></textarea>
-                
-                <button type="submit" class="btn-submit" id="submitBtn">تأكيد الإرسال 🚀</button>
-                <div id="loaderStatus" class="loading-spinner">جارِ الإرسال...</div>
-                
-                <button type="button" onclick="closeM()" style="background:none; border:none; color:#999; width:100%; margin-top:15px; cursor:pointer">إلغاء</button>
+                <button type="button" onclick="closeModal()" style="background:none; border:none; color:#999; width:100%; margin-top:10px; cursor:pointer">رجوع</button>
             </form>
         </div>
     </div>
 
     <script>
-        // رابط Formspree الجديد الخاص بك
         const FORMSPREE_ID = "mreqjepe";
         const ACTION_URL = `https://formspree.io/f/${FORMSPREE_ID}`;
 
-        const servicesData = [
-            { name: 'سباكة', icon: 'fa-faucet', bg: '#3b82f6', subs: ['تأسيس مياه', 'مضخات', 'مجاري'] },
-            { name: 'كهرباء', icon: 'fa-bolt-lightning', bg: '#ef4444', subs: ['تأسيس كهرباء', 'بوردات', 'إنارة'] },
-            { name: 'تكييف', icon: 'fa-wind', bg: '#06b6d4', subs: ['غسل سبلت', 'شحن غاز'] },
-            { name: 'أجهزة منزلية', icon: 'fa-blender', bg: '#8b5cf6', subs: ['غسالات', 'ثلاجات'] },
-            { name: 'نجارة', icon: '', bg: '#f59e0b', subs: ['تصليح أثاث', 'غرف نوم'] },
-            { name: 'حدادة', icon: 'fa-hammer', bg: '#64748b', subs: ['لحام عام', 'مظلات'] }, 
-            { name: 'كاميرات مراقبة', icon: 'fa-video', bg: '#f43f5e', subs: ['نصب منظومة', 'صيانة'] },
-            { name: 'بناء وتصميم', icon: 'fa-trowel-bricks', bg: '#78350f', subs: ['بناء هيكل', 'ترميم'] },
-            { name: 'صيانة سيارات', icon: 'fa-car-side', bg: '#0ea5e9', subs: ['ميكانيك', 'كهرباء'] },
-            { name: 'أصباغ وديكورات', icon: 'fa-paint-roller', bg: '#ec4899', subs: ['صبغ داخلي', 'ديكور'] },
-            { name: 'غسيل سيارات', icon: 'fa-car', bg: '#22d3ee', subs: ['غسل متنقل', 'تلميع'] }, 
-            { name: 'نقل أثاث', icon: 'fa-truck-moving', bg: '#fb923c', subs: ['داخل البصرة', 'تفكيك'] },
-            { name: 'حلاقة منزلية', icon: 'fa-scissors', bg: '#d946ef', subs: ['شعر ولحية'] },
-            { name: 'صيانة موبايل', icon: 'fa-mobile-screen', bg: '#6366f1', subs: ['تبديل شاشة', 'سوفتوير'] },
-            { name: 'رعاية كبار السن', icon: 'fa-heart-pulse', bg: '#ef4444', subs: ['مرافق صحي'] },
-            { name: 'تنظيف أثاث', icon: 'fa-couch', bg: '#a855f7', subs: ['قنفات وسجاد'] },
-            { name: 'مسواق وتوصيل', icon: 'fa-cart-shopping', bg: '#22c55e', subs: ['مسواق مخضر', 'توصيل'] },
-            { name: 'صيانة مولدات', icon: 'fa-gear', bg: '#facc15', subs: ['صيانة منزلية', 'تبديل دهن'] },
-            { name: 'حدائق', icon: 'fa-leaf', bg: '#10b981', subs: ['تنسيق حدائق', 'ثيل'] },
-            { name: 'دروس خصوصية', icon: 'fa-book-open', bg: '#3b82f6', subs: ['ابتدائي', 'متوسطة'] }
+        const services = [
+            { name: 'سباكة', icon: 'fa-faucet', bg: '#2563eb', subs: ['تصليح أنابيب', 'مضخات', 'مجاري'] },
+            { name: 'كهرباء', icon: 'fa-bolt-lightning', bg: '#dc2626', subs: ['تأسيس كامل', 'صيانة أعطال', 'إنارة'] },
+            { name: 'تكييف', icon: 'fa-snowflake', bg: '#0891b2', subs: ['غسل سبلت', 'شحن غاز'] },
+            { name: 'نجارة', icon: '', bg: '#d97706', subs: ['تصليح أثاث', 'غرف نوم'] },
+            { name: 'حدادة', icon: 'fa-hammer', bg: '#475569', subs: ['لحام عام', 'مظلات'] },
+            { name: 'أجهزة منزلية', icon: 'fa-blender', bg: '#7c3aed', subs: ['غسالات', 'ثلاجات'] },
+            { name: 'كاميرات', icon: 'fa-video', bg: '#e11d48', subs: ['نصب منظومة', 'صيانة'] },
+            { name: 'بناء وترميم', icon: 'fa-trowel-bricks', bg: '#92400e', subs: ['بناء هيكل', 'ترميم'] },
+            { name: 'صيانة سيارات', icon: 'fa-car-wrench', bg: '#0284c7', subs: ['ميكانيك', 'كهرباء'] },
+            { name: 'أصباغ', icon: 'fa-paint-roller', bg: '#db2777', subs: ['صبغ جدران', 'ديكور'] },
+            { name: 'نقل أثاث', icon: 'fa-truck-ramp-box', bg: '#ea580c', subs: ['نقل داخلي', 'تفكيك'] },
+            { name: 'تنظيف', icon: 'fa-broom', bg: '#059669', subs: ['منازل', 'سجاد'] },
+            { name: 'حلاقة', icon: 'fa-scissors', bg: '#c026d3', subs: ['رجال', 'أطفال'] },
+            { name: 'مولدات', icon: 'fa-gears', bg: '#ca8a04', subs: ['صيانة منزلية', 'تبديل دهن'] },
+            { name: 'توصيل', icon: 'fa-cart-shopping', bg: '#16a34a', subs: ['توصيل طلبات', 'مسواق'] },
+            { name: 'حدائق', icon: 'fa-seedling', bg: '#15803d', subs: ['تنسيق حدائق', 'ثيل'] }
         ];
 
-        const grid = document.getElementById('grid');
-        
-        servicesData.forEach(s => {
-            let iconMarkup = `<i class="fa-solid ${s.icon}" style="color: white; font-size: 1.5rem;"></i>`;
-            let extra = "";
+        // معالجة التسجيل
+        document.getElementById('loginForm').onsubmit = (e) => {
+            e.preventDefault();
+            const userData = {
+                name: document.getElementById('reg-name').value,
+                phone: document.getElementById('reg-phone').value,
+                city: document.getElementById('reg-city').value
+            };
+            localStorage.setItem('user_khidmati', JSON.stringify(userData));
+            
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('splash').style.display = 'flex';
+            setTimeout(() => { document.getElementById('splash').style.display = 'none'; }, 1500);
+        };
 
-            if(s.name === "نجارة") {
-                iconMarkup = `
-                    <div style="display: flex; gap: 5px; align-items: center; justify-content: center; color: white;">
-                        <i class="fa-solid fa-hammer" style="font-size: 1.2rem;"></i>
-                        <i class="fa-solid fa-screwdriver" style="font-size: 1.2rem;"></i>
-                    </div>`;
-            }
-            if(s.name === "صيانة مولدات") {
-                extra = '<i class="fa-solid fa-bolt" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; font-size:14px;"></i>';
-            }
-
+        // بناء الشبكة
+        const grid = document.getElementById('mainGrid');
+        services.forEach(s => {
+            let iconMarkup = `<i class="fa-solid ${s.icon}" style="color:white; font-size:1.6rem"></i>`;
+            if(s.name === 'نجارة') iconMarkup = '<div style="color:white"><i class="fa-solid fa-hammer"></i> <i class="fa-solid fa-screwdriver"></i></div>';
+            
             grid.innerHTML += `
-                <div class="service-card" onclick="openM('${s.name}')">
-                    <div class="icon-box" style="background: ${s.bg}; box-shadow: 0 8px 15px ${s.bg}44;">
-                        ${iconMarkup}
-                        ${extra}
-                    </div>
+                <div class="service-card" onclick="openModal('${s.name}')">
+                    <div class="icon-box" style="background:${s.bg}; box-shadow: 0 10px 20px ${s.bg}55">${iconMarkup}</div>
                     <h3>${s.name}</h3>
                 </div>`;
         });
 
-        window.onload = () => { 
-            setTimeout(() => { 
-                document.getElementById('splash').style.opacity = '0'; 
-                setTimeout(() => document.getElementById('splash').style.display = 'none', 800); 
-            }, 1800); 
-        };
-
-        function openM(n) { 
-            const s = servicesData.find(x => x.name === n); 
-            document.getElementById('stitle').innerText = "طلب خدمة " + n; 
-            document.getElementById('h-service').value = n; 
-            document.getElementById('sub-service').innerHTML = s.subs.map(opt => `<option>${opt}</option>`).join(''); 
-            document.getElementById('masterModal').style.display = 'flex'; 
+        function openModal(name) {
+            const s = services.find(x => x.name === name);
+            const user = JSON.parse(localStorage.getItem('user_khidmati'));
+            
+            document.getElementById('mTitle').innerText = "طلب " + name;
+            document.getElementById('hidden-service').value = name;
+            document.getElementById('sub-list').innerHTML = s.subs.map(v => `<option>${v}</option>`).join('');
+            
+            // ملء البيانات المخفية من التسجيل لتصلك في الرسالة
+            document.getElementById('hidden-name').value = user.name;
+            document.getElementById('hidden-phone').value = user.phone;
+            document.getElementById('hidden-city').value = user.city;
+            
+            document.getElementById('orderModal').style.display = 'flex';
         }
 
-        function closeM() { 
-            document.getElementById('masterModal').style.display = 'none'; 
-        }
+        function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
 
-        // معالجة الإرسال الآمن
-        document.getElementById('orderForm').onsubmit = async (e) => {
+        // إرسال الرسالة الطويلة المنظمة
+        document.getElementById('masterForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
-            const loader = document.getElementById('loaderStatus');
+            const load = document.getElementById('loadStatus');
             
-            // قفل الزر لمنع الإرسال المتكرر
-            btn.disabled = true;
             btn.style.display = 'none';
-            loader.style.display = 'block';
-
-            const formData = new FormData(e.target);
+            load.style.display = 'block';
 
             try {
-                const response = await fetch(ACTION_URL, {
+                const res = await fetch(ACTION_URL, {
                     method: 'POST',
-                    body: formData,
+                    body: new FormData(e.target),
                     headers: { 'Accept': 'application/json' }
                 });
 
-                if (response.ok) {
-                    alert("✅ تم إرسال طلبك بنجاح! سنتواصل معك في أقرب وقت.");
-                    e.target.reset();
-                    closeM();
+                if (res.ok) {
+                    alert("✅ تم إرسال طلبك بنجاح! ستصلك مكالمة قريباً لتأكيد الموعد.");
+                    closeModal();
                 } else {
-                    const data = await response.json();
-                    alert("⚠️ حدث خطأ في الإرسال: " + (data.errors ? data.errors[0].message : "يرجى المحاولة لاحقاً"));
+                    alert("⚠️ حدث خطأ في النظام، يرجى المحاولة لاحقاً.");
                 }
-            } catch (error) {
-                alert("❌ فشل الاتصال، تأكد من اتصالك بالإنترنت.");
+            } catch {
+                alert("❌ فشل الاتصال بالإنترنت.");
             } finally {
-                btn.disabled = false;
                 btn.style.display = 'block';
-                loader.style.display = 'none';
+                load.style.display = 'none';
+            }
+        };
+
+        // التحقق من التسجيل المسبق
+        window.onload = () => {
+            if(localStorage.getItem('user_khidmati')) {
+                document.getElementById('loginScreen').style.display = 'none';
             }
         };
     </script>
