@@ -80,10 +80,7 @@
             { name: 'بناء وتصميم', icon: 'fa-trowel-bricks', bg: '#78350f', subs: ['بناء هيكل', 'ترميم'] },
             { name: 'صيانة سيارات', icon: 'fa-car-side', bg: '#0ea5e9', subs: ['ميكانيك', 'كهرباء'] },
             { name: 'أصباغ وديكورات', icon: 'fa-paint-roller', bg: '#ec4899', subs: ['صبغ داخلي', 'ديكور'] },
-            
-            // غسيل السيارات (سيارة + رذاذ ماء)
             { name: 'غسيل سيارات', icon: 'fa-car', bg: '#22d3ee', subs: ['غسل متنقل', 'تلميع'] }, 
-            
             { name: 'نقل أثاث', icon: 'fa-truck-moving', bg: '#fb923c', subs: ['داخل البصرة', 'تفكيك'] },
             { name: 'حلاقة منزلية', icon: 'fa-scissors', bg: '#d946ef', subs: ['شعر ولحية'] },
             { name: 'صيانة موبايل', icon: 'fa-mobile-screen', bg: '#6366f1', subs: ['تبديل شاشة', 'سوفتوير'] },
@@ -91,7 +88,7 @@
             { name: 'تنظيف أثاث', icon: 'fa-couch', bg: '#a855f7', subs: ['قنفات وسجاد'] },
             { name: 'مسواق وتوصيل', icon: 'fa-cart-shopping', bg: '#22c55e', subs: ['مسواق مخضر', 'توصيل'] },
             
-            // صيانة المولدات (أيقونة الترس المضمونة)
+            // صيانة المولدات
             { name: 'صيانة مولدات', icon: 'fa-gear', bg: '#facc15', subs: ['صيانة منزلية', 'تبديل دهن'] },
             
             { name: 'حدائق', icon: 'fa-leaf', bg: '#10b981', subs: ['تنسيق حدائق', 'ثيل'] },
@@ -101,28 +98,30 @@
         const grid = document.getElementById('grid');
         servicesData.forEach(s => {
             let extra = "";
-            // إضافة رذاذ لغسيل السيارات
+            let customSize = "1.5rem"; // الحجم الافتراضي لكل الأيقونات
+
             if(s.name === "غسيل سيارات") {
                 extra = '<i class="fa-solid fa-shower" style="position:absolute; top:2px; right:2px; color:white; font-size:12px;"></i>';
             }
-            // إضافة صاعقة للمولدة لتمييزها كطاقة
+            
+            // تكبير خاص لصيانة المولدات
             if(s.name === "صيانة مولدات") {
-                extra = '<i class="fa-solid fa-bolt" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; font-size:10px;"></i>';
+                extra = '<i class="fa-solid fa-bolt" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#000; font-size:14px;"></i>';
+                customSize = "2.3rem"; // تكبير الحجم هنا
             }
 
             grid.innerHTML += `
                 <div class="service-card" onclick="openM('${s.name}')" style="background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.05);">
-                    <div class="icon-box" style="background: ${s.bg}; box-shadow: 0 8px 20px ${s.bg}66; width: 62px; height: 62px; border-radius: 18px; position:relative; overflow:visible;">
-                        <i class="fa-solid ${s.icon}" style="color: white; font-size: 1.5rem;"></i>
+                    <div class="icon-box" style="background: ${s.bg}; box-shadow: 0 8px 20px ${s.bg}66; width: 62px; height: 62px; border-radius: 18px; position:relative;">
+                        <i class="fa-solid ${s.icon}" style="color: white; font-size: ${customSize};"></i>
                         ${extra}
                     </div>
                     <h3 style="color: #f8fafc; font-size: 0.9rem; margin-top: 10px;">${s.name}</h3>
                 </div>`;
         });
 
-        // باقي الأكواد الأساسية
+        // دوال النافذة المنبثقة تبقى كما هي
         window.onload = () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 800); }, 2000); };
         function openM(n) { const s = servicesData.find(x => x.name === n); document.getElementById('stitle').innerText = n; document.getElementById('h-service').value = n; document.getElementById('sub-service').innerHTML = s.subs.map(opt => `<option>${opt}</option>`).join(''); document.getElementById('masterModal').style.display = 'flex'; }
         function closeM() { document.getElementById('masterModal').style.display = 'none'; }
-        document.getElementById('orderForm').onsubmit = async function(e) { e.preventDefault(); const btn = document.getElementById('submitBtn'); btn.innerText = "جاري الإرسال..."; const res = await fetch("https://formspree.io/f/xzdelngd", { method: "POST", body: new FormData(this), headers: { 'Accept': 'application/json' } }); if (res.ok) { alert("✅ تم استلام طلبك!"); this.reset(); closeM(); } else { alert("❌ فشل."); } btn.innerText = "تأكيد الإرسال 🚀"; };
     </script>
