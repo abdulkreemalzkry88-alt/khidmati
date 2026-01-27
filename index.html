@@ -81,8 +81,8 @@
             { name: 'صيانة سيارات', icon: 'fa-car-side', bg: '#0ea5e9', subs: ['ميكانيك', 'كهرباء'] },
             { name: 'أصباغ وديكورات', icon: 'fa-paint-roller', bg: '#ec4899', subs: ['صبغ داخلي', 'ديكور'] },
             
-            // تحديث غسيل السيارات (سيارة مع رغوة/نظافة)
-            { name: 'غسيل سيارات', icon: 'fa-car-on', bg: '#22d3ee', subs: ['غسل متنقل', 'تلميع'] }, 
+            // غسيل السيارات (سيارة + رذاذ ماء)
+            { name: 'غسيل سيارات', icon: 'fa-car', bg: '#22d3ee', subs: ['غسل متنقل', 'تلميع'] }, 
             
             { name: 'نقل أثاث', icon: 'fa-truck-moving', bg: '#fb923c', subs: ['داخل البصرة', 'تفكيك'] },
             { name: 'حلاقة منزلية', icon: 'fa-scissors', bg: '#d946ef', subs: ['شعر ولحية'] },
@@ -91,8 +91,8 @@
             { name: 'تنظيف أثاث', icon: 'fa-couch', bg: '#a855f7', subs: ['قنفات وسجاد'] },
             { name: 'مسواق وتوصيل', icon: 'fa-cart-shopping', bg: '#22c55e', subs: ['مسواق مخضر', 'توصيل'] },
             
-            // تحديث صيانة المولدات (محرك/تروس الطاقة)
-            { name: 'صيانة مولدات', icon: 'fa-engine-warning', bg: '#facc15', subs: ['صيانة منزلية', 'تبديل دهن'] },
+            // صيانة المولدات (أيقونة الترس المضمونة)
+            { name: 'صيانة مولدات', icon: 'fa-gear', bg: '#facc15', subs: ['صيانة منزلية', 'تبديل دهن'] },
             
             { name: 'حدائق', icon: 'fa-leaf', bg: '#10b981', subs: ['تنسيق حدائق', 'ثيل'] },
             { name: 'دروس خصوصية', icon: 'fa-book-open', bg: '#3b82f6', subs: ['ابتدائي', 'متوسطة'] }
@@ -100,26 +100,27 @@
 
         const grid = document.getElementById('grid');
         servicesData.forEach(s => {
-            // تأثيرات إضافية لجعل الأيقونات "ترتيب" وفخمة
-            let spark = "";
+            let extra = "";
+            // إضافة رذاذ لغسيل السيارات
             if(s.name === "غسيل سيارات") {
-                spark = '<i class="fa-solid fa-sparkles" style="position:absolute; top:-5px; right:-5px; color:#fff; font-size:12px;"></i>';
+                extra = '<i class="fa-solid fa-shower" style="position:absolute; top:2px; right:2px; color:white; font-size:12px;"></i>';
             }
+            // إضافة صاعقة للمولدة لتمييزها كطاقة
             if(s.name === "صيانة مولدات") {
-                spark = '<i class="fa-solid fa-bolt" style="position:absolute; top:-5px; right:-5px; color:#fff; font-size:12px;"></i>';
+                extra = '<i class="fa-solid fa-bolt" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; font-size:10px;"></i>';
             }
 
             grid.innerHTML += `
                 <div class="service-card" onclick="openM('${s.name}')" style="background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.05);">
-                    <div class="icon-box" style="background: ${s.bg}; box-shadow: 0 8px 20px ${s.bg}66; width: 62px; height: 62px; border-radius: 18px; position:relative;">
+                    <div class="icon-box" style="background: ${s.bg}; box-shadow: 0 8px 20px ${s.bg}66; width: 62px; height: 62px; border-radius: 18px; position:relative; overflow:visible;">
                         <i class="fa-solid ${s.icon}" style="color: white; font-size: 1.5rem;"></i>
-                        ${spark}
+                        ${extra}
                     </div>
                     <h3 style="color: #f8fafc; font-size: 0.9rem; margin-top: 10px;">${s.name}</h3>
                 </div>`;
         });
 
-        // دوال النافذة المنبثقة والارسال (تبقى كما هي لضمان العمل)
+        // باقي الأكواد الأساسية
         window.onload = () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 800); }, 2000); };
         function openM(n) { const s = servicesData.find(x => x.name === n); document.getElementById('stitle').innerText = n; document.getElementById('h-service').value = n; document.getElementById('sub-service').innerHTML = s.subs.map(opt => `<option>${opt}</option>`).join(''); document.getElementById('masterModal').style.display = 'flex'; }
         function closeM() { document.getElementById('masterModal').style.display = 'none'; }
