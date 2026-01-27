@@ -2,96 +2,118 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>خدماتي - البصرة الشامل</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-        :root { --royal-blue: #002366; --gold: #D4AF37; --white: #ffffff; }
+        :root { --royal-blue: #002366; --gold: #D4AF37; --white: #ffffff; --card-bg: rgba(255, 255, 255, 0.07); }
         body { 
             font-family: 'Tajawal', sans-serif; margin: 0; padding: 0;
-            background: radial-gradient(circle at top, var(--royal-blue), #000);
-            color: var(--white); min-height: 100vh; overflow-x: hidden;
+            background: radial-gradient(circle at top, var(--royal-blue), #020617);
+            color: var(--white); min-height: 100vh; overflow-x: hidden; user-select: none;
         }
         #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--royal-blue); z-index: 10000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s ease-in-out;
         }
         .splash-logo { font-size: 3.5rem; font-weight: 900; color: var(--gold); animation: pulse 2s infinite; }
+        .loader { width: 40px; height: 40px; border: 4px solid rgba(212, 175, 55, 0.2); border-top: 4px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } }
-        header { padding: 60px 20px 30px; text-align: center; }
-        header h1 { font-size: 3rem; font-weight: 900; margin: 0; }
-        header h1 span { color: var(--gold); }
-        .container { width: 92%; max-width: 1200px; margin: 0 auto; padding-bottom: 50px; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; padding: 20px 0; }
+        header { padding: 50px 20px 20px; text-align: center; }
+        header h1 { font-size: 2.5rem; font-weight: 900; margin: 0; color: var(--gold); }
+        header p { opacity: 0.8; font-size: 1rem; margin-top: 5px; }
+        .container { width: 95%; max-width: 1200px; margin: 0 auto; padding-bottom: 100px; }
+        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px; }
+        @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
         .service-card { 
-            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); 
-            border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 25px 10px; text-align: center; cursor: pointer; transition: 0.3s;
+            background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.2); 
+            border-radius: 20px; padding: 20px 10px; text-align: center; cursor: pointer; transition: 0.3s;
+            display: flex; flex-direction: column; align-items: center;
         }
-        .service-card:hover { border-color: var(--gold); transform: translateY(-5px); background: rgba(255, 255, 255, 0.1); }
-        .icon-box { font-size: 2.5rem; color: var(--gold); margin-bottom: 12px; }
-        .service-card h3 { font-size: 1rem; margin: 0; font-weight: 700; }
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 10px; }
-        .modal-content { background: #fff; color: #000; border-radius: 25px; padding: 25px; width: 100%; max-width: 450px; border: 5px solid var(--gold); max-height: 90vh; overflow-y: auto; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 2px solid #ddd; font-family: 'Tajawal'; font-weight: 700; box-sizing: border-box; }
-        .btn-submit { background: var(--royal-blue); color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; font-size: 1.1rem; font-weight: 900; cursor: pointer; }
+        .service-card:active { transform: scale(0.95); background: rgba(255, 255, 255, 0.1); }
+        .icon-box { 
+            width: 65px; height: 65px; background: rgba(212, 175, 55, 0.12); border-radius: 18px; 
+            display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--gold); margin-bottom: 12px;
+        }
+        .service-card h3 { font-size: 1rem; margin: 0; font-weight: 700; color: #fff; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center; padding: 15px; }
+        .modal-content { background: #fff; color: #333; border-radius: 25px; padding: 25px; width: 100%; max-width: 400px; }
+        input, select, textarea { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid #ddd; font-family: 'Tajawal'; font-size: 1rem; box-sizing: border-box; }
+        .btn-submit { background: var(--royal-blue); color: white; border: none; padding: 16px; border-radius: 12px; width: 100%; font-size: 1.1rem; font-weight: 900; cursor: pointer; }
+        .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background-color: #25d366; color: white !important; border-radius: 50px; padding: 12px 20px; display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 9998; }
     </style>
 </head>
 <body>
-    <div id="splash"><div class="splash-logo">خِدْماتي</div><p>البصرة الشامل</p></div>
-    <header><h1>خِدْماتي <span>البصرة</span></h1><p>المنصة الأكبر لخدمات المنازل في البصرة</p></header>
+    <div id="splash"><div class="splash-logo">خِدْماتي</div><p>دليلك الشامل في البصرة</p><div class="loader"></div></div>
+    <header><h1>خِدْماتي <span>البصرة</span></h1><p>نخبة من الفنيين في خدمتك</p></header>
     <div class="container"><div class="services-grid" id="grid"></div></div>
+    <a href="https://wa.me/9647716741488" class="whatsapp-float"><i class="fab fa-whatsapp"></i> مراسلة فورية</a>
     <div id="masterModal" class="modal-overlay">
         <div class="modal-content">
-            <h2 id="stitle" style="text-align:center; color: var(--royal-blue);">تفاصيل الطلب</h2>
+            <h2 id="stitle" style="text-align:center; color: var(--royal-blue); margin-bottom: 15px;">طلب الخدمة</h2>
             <form id="orderForm">
-                <input type="hidden" name="الخدمة الأساسية" id="h-service">
-                <label>نوع الخدمة الفرعية:</label><select name="الخدمة الفرعية" id="sub-service"></select>
-                <label>المنطقة في البصرة:</label><select name="المنطقة" id="u-loc" required>
-                    <option>مركز البصرة</option><option>الزبير</option><option>شط العرب</option><option>أبي الخصيب</option><option>القرنة</option><option>الفاو</option><option>الهارثة</option><option>سفوان</option>
+                <input type="hidden" name="الخدمة" id="h-service">
+                <select name="النوع" id="sub-service"></select>
+                <select name="المنطقة" id="u-loc" required>
+                    <option value="">اختر منطقتك...</option>
+                    <option>مركز البصرة</option><option>الزبير</option><option>شط العرب</option>
+                    <option>أبي الخصيب</option><option>القرنة</option><option>الفاو</option>
+                    <option>الهارثة</option><option>سفوان</option>
                 </select>
-                <input type="tel" name="رقم الهاتف" id="u-phone" placeholder="رقم الهاتف (07XXXXXXXXX)" required>
-                <textarea name="وصف المشكلة" id="u-desc" placeholder="اكتب ملاحظات إضافية هنا..."></textarea>
-                <button type="submit" class="btn-submit" id="submitBtn">تأكيد إرسال الطلب 🚀</button>
-                <button type="button" onclick="closeM()" style="background:none; border:none; color:red; width:100%; margin-top:10px; cursor:pointer">إلغاء</button>
+                <input type="tel" name="الهاتف" id="u-phone" placeholder="رقم الهاتف" required>
+                <textarea name="ملاحظات" id="u-desc" rows="3" placeholder="وصف المشكلة..."></textarea>
+                <button type="submit" class="btn-submit" id="submitBtn">إرسال الطلب 🚀</button>
+                <button type="button" onclick="closeM()" style="background:none; border:none; color:#777; width:100%; margin-top:10px; cursor:pointer">إغلاق</button>
             </form>
         </div>
-    </div> 
+    </div>
 	<script>
         const servicesData = [
-            { name: 'سباكة', icon: 'fa-droplet', subs: ['تأسيس مياه', 'صيانة مضخات', 'تسليك مجاري', 'تركيب خلاطات'] },
-            { name: 'كهرباء', icon: 'fa-bolt', subs: ['تأسيس منازل', 'صيانة بوردات', 'تركيب إنارة', 'صيانة أجهزة حماية'] },
-            { name: 'تكييف', icon: 'fa-wind', subs: ['غسل سبلت', 'شحن غاز', 'صيانة كارتات', 'نصب وفك'] },
-            { name: 'أجهزة منزلية', icon: 'fa-tv', subs: ['تصليح غسالات', 'ثلاجات ومجمدات', 'طباخات', 'مايكروويف'] },
-            { name: 'نجارة', icon: 'fa-hammer', subs: ['تصليح أثاث', 'تركيب غرف نوم', 'نجارة أبواب'] },
-            { name: 'حدادة', icon: 'fa-fire-burner', subs: ['لحام عام', 'تصليح أبواب حديد', 'عمل مظلات'] },
-            { name: 'كاميرات مراقبة', icon: 'fa-video', subs: ['نصب منظومة كاملة', 'صيانة كاميرات', 'ربط على الموبايل'] },
-            { name: 'بناء وتصميم', icon: 'fa-trowel-bricks', subs: ['بناء هيكل', 'ترميم منازل', 'تطبيك سيراميك', 'لبخ وجص'] },
-            { name: 'صيانة سيارات', icon: 'fa-car-wrench', subs: ['ميكانيك عام', 'كهرباء سيارات', 'تبديل دهن', 'فحص حاسبة'] },
-            { name: 'أصباغ وديكورات', icon: 'fa-paint-roller', subs: ['صبغ جوتن', 'ورق جدران', 'بديل رخام'] },
-            { name: 'غسيل سيارات', icon: 'fa-shower', subs: ['غسل متنقل', 'تلميع بولش', 'تنظيف محرك'] },
-            { name: 'نقل أثاث', icon: 'fa-truck-ramp-box', subs: ['نقل داخل البصرة', 'تفكيك وتغليف', 'عمال تحميل'] },
-            { name: 'حلاقة منزلية', icon: 'fa-scissors', subs: ['حلاقة شعر وذقن', 'تنظيف بشرة'] },
-            { name: 'صيانة موبايل وحاسوب', icon: 'fa-laptop-medical', subs: ['تبديل شاشات', 'فورمات', 'صيانة هاردوير'] },
-            { name: 'رعاية كبار السن', icon: 'fa-hand-holding-heart', subs: ['جليس مسن', 'مرافق صحي'] },
-            { name: 'تنظيف أثاث', icon: 'fa-soap', subs: ['غسل قنفات', 'تنظيف سجاد'] },
-            { name: 'مسواق وتوصيل', icon: 'fa-basket-shopping', subs: ['مسواق مخضر', 'توصيل طلبات'] },
-            { name: 'صيانة مولدات', icon: 'fa-gears', subs: ['صيانة مولدة منزلية', 'تبديل دهن وفلاتر'] },
-            { name: 'حدائق ولاندسكيب', icon: 'fa-leaf', subs: ['ترتيب حدائق', 'ثيل صناعي'] },
-            { name: 'دروس خصوصية', icon: 'fa-book-open-reader', subs: ['ابتدائي', 'متوسطة', 'إعدادي'] }
+            { name: 'سباكة', icon: 'fa-faucet-drip', subs: ['تأسيس مياه', 'مضخات', 'مجاري'] },
+            { name: 'كهرباء', icon: 'fa-plug-circle-bolt', subs: ['تأسيس كهرباء', 'بوردات', 'إنارة'] },
+            { name: 'تكييف', icon: 'fa-snowflake', subs: ['غسل سبلت', 'شحن غاز', 'صيانة'] },
+            { name: 'أجهزة منزلية', icon: 'fa-tv', subs: ['غسالات', 'ثلاجات', 'طباخات'] },
+            { name: 'نجارة', icon: 'fa-hammer', subs: ['تصليح أثاث', 'غرف نوم'] },
+            { name: 'حدادة', icon: 'fa-screwdriver-wrench', subs: ['لحام عام', 'مظلات وشبابيك'] },
+            { name: 'كاميرات مراقبة', icon: 'fa-shield-halved', subs: ['نصب منظومة', 'صيانة كاميرات'] },
+            { name: 'بناء وتصميم', icon: 'fa-trowel-bricks', subs: ['بناء هيكل', 'ترميم', 'سيراميك'] },
+            { name: 'صيانة سيارات', icon: 'fa-car-wrench', subs: ['ميكانيك', 'كهرباء سيارات'] },
+            { name: 'أصباغ وديكورات', icon: 'fa-paint-roller', subs: ['صبغ داخلي', 'ورق جدران'] },
+            { name: 'غسيل سيارات', icon: 'fa-bubbles', subs: ['غسل متنقل', 'بولش وتلميع'] },
+            { name: 'نقل أثاث', icon: 'fa-truck-fast', subs: ['نقل داخل البصرة', 'تفكيك وتغليف'] },
+            { name: 'حلاقة منزلية', icon: 'fa-scissors', subs: ['حلاقة شعر وذقن', 'عناية بالبشرة'] },
+            { name: 'صيانة موبايل', icon: 'fa-mobile-screen-button', subs: ['تبديل شاشة', 'سوفتوير'] },
+            { name: 'رعاية كبار السن', icon: 'fa-hand-holding-heart', subs: ['مرافق صحي', 'جليس مسن'] },
+            { name: 'تنظيف أثاث', icon: 'fa-soap', subs: ['قنفات وسجاد', 'جلي أرضيات'] },
+            { name: 'مسواق وتوصيل', icon: 'fa-cart-shopping', subs: ['مسواق مخضر', 'توصيل طلبات'] },
+            { name: 'صيانة مولدات', icon: 'fa-gears', subs: ['صيانة منزلية', 'تبديل دهن'] },
+            { name: 'حدائق', icon: 'fa-leaf', subs: ['ترتيب حدائق', 'ثيل صناعي'] },
+            { name: 'دروس خصوصية', icon: 'fa-user-graduate', subs: ['ابتدائي', 'متوسطة', 'إعدادي'] }
         ];
 
         const grid = document.getElementById('grid');
         servicesData.forEach(s => {
-            grid.innerHTML += `<div class="service-card" onclick="openM('${s.name}')"><div class="icon-box"><i class="fas ${s.icon}"></i></div><h3>${s.name}</h3></div>`;
+            grid.innerHTML += `
+                <div class="service-card" onclick="openM('${s.name}')">
+                    <div class="icon-box"><i class="fas ${s.icon}"></i></div>
+                    <h3>${s.name}</h3>
+                </div>`;
         });
 
-        window.onload = () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 800); }, 2500); };
+        window.onload = () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash');
+                splash.style.opacity = '0';
+                setTimeout(() => splash.style.display = 'none', 800);
+            }, 2000);
+        };
 
         function openM(n) {
             const s = servicesData.find(x => x.name === n);
-            document.getElementById('stitle').innerText = "طلب " + n;
+            document.getElementById('stitle').innerText = n;
             document.getElementById('h-service').value = n;
             document.getElementById('sub-service').innerHTML = s.subs.map(opt => `<option>${opt}</option>`).join('');
             document.getElementById('masterModal').style.display = 'flex';
@@ -101,16 +123,14 @@
 
         document.getElementById('orderForm').onsubmit = async function(e) {
             e.preventDefault();
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.innerText = "جاري الإرسال...";
-            const response = await fetch("https://formspree.io/f/xzdelngd", {
-                method: "POST",
-                body: new FormData(this),
-                headers: { 'Accept': 'application/json' }
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "جاري الإرسال...";
+            const res = await fetch("https://formspree.io/f/xzdelngd", {
+                method: "POST", body: new FormData(this), headers: { 'Accept': 'application/json' }
             });
-            if (response.ok) { alert("✅ تم إرسال طلبك بنجاح!"); this.reset(); closeM(); } 
-            else { alert("❌ فشل الإرسال."); }
-            submitBtn.innerText = "تأكيد إرسال الطلب 🚀";
+            if (res.ok) { alert("✅ تم استلام طلبك! سنتواصل معك قريباً."); this.reset(); closeM(); } 
+            else { alert("❌ حدث خطأ في الإرسال."); }
+            btn.innerText = "إرسال الطلب 🚀";
         };
     </script>
 </body>
