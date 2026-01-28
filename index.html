@@ -13,25 +13,30 @@
         :root { 
             --royal-blue: #002366; 
             --gold: #D4AF37; 
-            --white: #ffffff; 
+            --white: #ffffff;
             --glass-bg: rgba(255, 255, 255, 0.08);
             --gold-glow: rgba(212, 175, 55, 0.4);
         }
         
         body { 
-            font-family: 'Tajawal', sans-serif; margin: 0; padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            margin: 0; padding: 0;
             background: radial-gradient(circle at top, var(--royal-blue), #020617);
             color: var(--white); min-height: 100vh; overflow-x: hidden; user-select: none;
         }
 
-        /* شاشة التحميل */
         #splash {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: var(--royal-blue); z-index: 10000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: 0.8s;
         }
-        .splash-logo { font-size: 3.5rem; font-weight: 900; color: var(--gold); animation: pulse 2s infinite; }
-        .loader { width: 40px; height: 40px; border: 4px solid rgba(212, 175, 55, 0.2); border-top: 4px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px; }
+        .splash-logo { font-size: 3.5rem; font-weight: 900; color: var(--gold);
+            animation: pulse 2s infinite; }
+        .loader { width: 40px; height: 40px;
+            border: 4px solid rgba(212, 175, 55, 0.2); border-top: 4px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px;
+        }
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes pulse {
             0% { transform: scale(1); opacity: 1; }
@@ -45,48 +50,35 @@
         
         .container { width: 95%; max-width: 1200px; margin: 0 auto; padding-bottom: 100px; }
         
-        /* تصميم البطاقات الزجاجية مع اللمسة الذهبية */
         .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px; }
         @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
         
         .service-card { 
-            background: var(--glass-bg); 
-            backdrop-filter: blur(15px); 
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 24px; padding: 22px 10px; text-align: center; 
-            cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 22px 10px; 
+            text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative; overflow: hidden;
         }
 
-        /* تأثير الإطار الذهبي عند اللمس أو التفاعل */
         .service-card::after {
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 24px; border: 2px solid var(--gold);
-            opacity: 0; transition: 0.3s; pointer-events: none;
-            box-shadow: inset 0 0 15px var(--gold-glow), 0 0 15px var(--gold-glow);
+            border-radius: 24px; border: 2px solid var(--gold); opacity: 0; transition: 0.3s;
+            pointer-events: none; box-shadow: inset 0 0 15px var(--gold-glow), 0 0 15px var(--gold-glow);
         }
 
         .service-card:active { transform: scale(0.94); }
         .service-card:active::after { opacity: 1; }
         
-        /* تفعيل التأثير للماوس أيضاً */
-        @media (hover: hover) {
-            .service-card:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(212, 175, 55, 0.3); }
-            .service-card:hover::after { opacity: 1; }
-        }
-
         .icon-box { 
             width: 65px; height: 65px; border-radius: 20px; 
             display: flex; align-items: center; justify-content: center; 
-            margin: 0 auto 15px; position: relative;
-            transition: 0.3s;
+            margin: 0 auto 15px; position: relative; transition: 0.3s;
         }
         
         .service-card h3 { font-size: 0.95rem; margin: 0; font-weight: 700; color: #fff; margin-top: 10px; transition: 0.3s; }
         .service-card:active h3 { color: var(--gold); }
 
-        /* نافذة الطلب المحدثة */
         .modal-overlay { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; 
@@ -112,8 +104,7 @@
         .btn-submit { 
             background: linear-gradient(135deg, #22c55e, #16a34a); color: white; border: none; padding: 18px; 
             border-radius: 15px; width: 100%; font-size: 1.1rem; font-weight: 900; 
-            cursor: pointer; transition: 0.3s; margin-top: 10px;
-            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+            cursor: pointer; transition: 0.3s; margin-top: 10px; box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
         }
         
         .whatsapp-float { 
@@ -142,17 +133,17 @@
     </div>
 
     <a href="https://wa.me/9647716741488" class="whatsapp-float">
-        <i class="fab fa-whatsapp"></i> مراسلة الدعم الفني
+         <i class="fab fa-whatsapp"></i> مراسلة الدعم الفني
     </a>
 
     <div id="masterModal" class="modal-overlay">
         <div class="modal-content">
             <h2 id="stitle" style="text-align:center; color: var(--royal-blue); margin: 0 0 15px;">طلب خدمة</h2>
-            <form id="orderForm">
-                <input type="hidden" name="الخدمة" id="h-service">
+            <form id="orderForm" action="https://formspree.io/f/mreqjepe" method="POST">
+                <input type="hidden" name="الخدمة_الأساسية" id="h-service">
                 
                 <label>نوع الخدمة الفرعية:</label>
-                <select name="النوع" id="sub-service"></select>
+                <select name="النوع_الفرعي" id="sub-service"></select>
                 
                 <label>المنطقة في البصرة:</label>
                 <select name="المنطقة" id="u-loc" required>
@@ -163,25 +154,24 @@
                 </select>
                 
                 <label>رقم التواصل (واتساب):</label>
-                <input type="tel" name="الهاتف" id="u-phone" placeholder="07XXXXXXXXX" required pattern="[0-9]{11}">
+                <input type="tel" name="رقم_الهاتف" id="u-phone" placeholder="07XXXXXXXXX" required pattern="[0-9]{11}">
                 
                 <label>تفاصيل الطلب:</label>
-                <textarea name="ملاحظات" id="u-desc" rows="3" placeholder="مثلاً: العنوان بالتحديد أو نوع المشكلة..."></textarea>
+                <textarea name="تفاصيل_إضافية" id="u-desc" rows="3" placeholder="مثلاً: العنوان بالتحديد أو نوع المشكلة..."></textarea>
                 
                 <button type="submit" class="btn-submit" id="submitBtn">إرسال الطلب الآن 🚀</button>
                 <button type="button" onclick="closeM()" style="background:none; border:none; color:#999; width:100%; margin-top:15px; cursor:pointer; font-family:'Tajawal'; font-size: 0.9rem;">رجوع</button>
             </form>
         </div>
     </div>
-
-    <script>
+	<script>
         const servicesData = [
             { name: 'سباكة', icon: 'fa-faucet', bg: '#3b82f6', subs: ['تأسيس مياه', 'مضخات', 'مجاري', 'تصليح حنفيات'] },
             { name: 'كهرباء', icon: 'fa-bolt-lightning', bg: '#ef4444', subs: ['تأسيس كهرباء', 'بوردات', 'إنارة', 'تصليح أجهزة'] },
             { name: 'تكييف', icon: 'fa-wind', bg: '#06b6d4', subs: ['غسل سبلت', 'شحن غاز', 'نصب سبلت'] },
             { name: 'أجهزة منزلية', icon: 'fa-blender', bg: '#8b5cf6', subs: ['غسالات', 'ثلاجات', 'أفران'] },
             { name: 'نجارة', icon: 'special-wood', bg: '#f59e0b', subs: ['تصليح أثاث', 'غرف نوم', 'أبواب وشبابيك'] },
-            { name: 'حدادة', icon: 'fa-hammer', bg: '#64748b', subs: ['لحام عام', 'مظلات', 'أبواب حديد'] }, 
+            { name: 'حدادة', icon: 'fa-hammer', bg: '#64748b', subs: ['لحام عام', 'مظلات', 'أبواب حديد'] },
             { name: 'كاميرات مراقبة', icon: 'fa-video', bg: '#f43f5e', subs: ['نصب منظومة', 'صيانة', 'ربط على الموبايل'] },
             { name: 'بناء وتصميم', icon: 'fa-trowel-bricks', bg: '#78350f', subs: ['بناء هيكل', 'ترميم', 'لبخ وسيراميك'] },
             { name: 'صيانة سيارات', icon: 'fa-car-side', bg: '#0ea5e9', subs: ['ميكانيك', 'كهرباء سيارات', 'فحص حاسبة'] },
@@ -203,43 +193,23 @@
         servicesData.forEach(s => {
             let innerContent = `<i class="fa-solid ${s.icon}" style="color: white; font-size: 1.6rem;"></i>`;
             let extra = "";
-
             if(s.icon === "special-wood") {
-                innerContent = `
-                    <div style="display: flex; gap: 6px; align-items: center; justify-content: center; color: white;">
-                        <i class="fa-solid fa-hammer" style="font-size: 1.4rem;"></i>
-                        <i class="fa-solid fa-saw" style="font-size: 1.4rem;"></i>
-                    </div>`;
+                innerContent = `<div style="display: flex; gap: 6px; align-items: center; justify-content: center; color: white;">
+                    <i class="fa-solid fa-hammer" style="font-size: 1.4rem;"></i><i class="fa-solid fa-saw" style="font-size: 1.4rem;"></i></div>`;
             }
-
-            if(s.name === "حدادة") {
-                extra = '<div style="position:absolute; bottom:12px; width:22px; height:6px; background:rgba(255,255,255,0.4); border-radius:10px;"></div>';
-            }
-
+            if(s.name === "حدادة") extra = '<div style="position:absolute; bottom:12px; width:22px; height:6px; background:rgba(255,255,255,0.4); border-radius:10px;"></div>';
             if(s.name === "صيانة مولدات") {
                 innerContent = `<i class="fa-solid fa-gear" style="color: white; font-size: 2.2rem;"></i>`;
                 extra = '<i class="fa-solid fa-bolt" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:14px;"></i>';
             }
-
             const card = document.createElement('div');
             card.className = 'service-card';
             card.onclick = () => openM(s.name);
-            card.innerHTML = `
-                <div class="icon-box" style="background: linear-gradient(135deg, ${s.bg}, ${s.bg}dd); box-shadow: 0 10px 20px ${s.bg}44;">
-                    ${innerContent}
-                    ${extra}
-                </div>
-                <h3>${s.name}</h3>
-            `;
+            card.innerHTML = `<div class="icon-box" style="background: linear-gradient(135deg, ${s.bg}, ${s.bg}dd); box-shadow: 0 10px 20px ${s.bg}44;">${innerContent}${extra}</div><h3>${s.name}</h3>`;
             grid.appendChild(card);
         });
 
-        window.onload = () => { 
-            setTimeout(() => { 
-                document.getElementById('splash').style.opacity = '0'; 
-                setTimeout(() => document.getElementById('splash').style.display = 'none', 800); 
-            }, 1200); 
-        };
+        window.onload = () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 800); }, 1200); };
 
         function openM(n) { 
             const s = servicesData.find(x => x.name === n); 
@@ -250,32 +220,49 @@
         }
 
         function closeM() { document.getElementById('masterModal').style.display = 'none'; }
+        window.onclick = function(event) { if (event.target == document.getElementById('masterModal')) closeM(); }
 
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('masterModal')) closeM();
-        }
-
-        document.getElementById('orderForm').onsubmit = function(e) {
+        // تعديل الـ Submit لإرسال البيانات للإيميل والواتساب معاً
+        document.getElementById('orderForm').onsubmit = async function(e) {
             e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "جاري الإرسال...";
+            btn.disabled = true;
+
             const service = document.getElementById('h-service').value;
             const subType = document.getElementById('sub-service').value;
             const location = document.getElementById('u-loc').value;
             const phone = document.getElementById('u-phone').value;
             const notes = document.getElementById('u-desc').value || "لا توجد ملاحظات";
 
-            const message = `*طلب خدمة جديد من تطبيق خدماتي*%0A%0A` +
-                            `🔧 *الخدمة:* ${service}%0A` +
-                            `📂 *النوع:* ${subType}%0A` +
-                            `📍 *المنطقة:* ${location}%0A` +
-                            `📞 *رقم الهاتف:* ${phone}%0A` +
-                            `📝 *التفاصيل:* ${notes}`;
+            // 1. الإرسال إلى Formspree (الإيميل)
+            const formData = new FormData(this);
+            try {
+                await fetch("https://formspree.io/f/mreqjepe", {
+                    method: "POST",
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
 
-            const whatsappUrl = `https://wa.me/9647716741488?text=${message}`;
-            window.open(whatsappUrl, '_blank');
-            closeM();
-            this.reset();
+                // 2. الإرسال إلى واتساب بعد نجاح الإيميل
+                const message = `*طلب خدمة جديد من تطبيق خدماتي*%0A%0A` +
+                                `🔧 *الخدمة:* ${service}%0A` +
+                                `📂 *النوع:* ${subType}%0A` +
+                                `📍 *المنطقة:* ${location}%0A` +
+                                `📞 *رقم الهاتف:* ${phone}%0A` +
+                                `📝 *التفاصيل:* ${notes}`;
+                
+                window.open(`https://wa.me/9647716741488?text=${message}`, '_blank');
+                
+                closeM();
+                this.reset();
+            } catch (error) {
+                alert("حدث خطأ، يرجى المحاولة مرة أخرى.");
+            } finally {
+                btn.innerText = "إرسال الطلب الآن 🚀";
+                btn.disabled = false;
+            }
         };
     </script>
 </body>
 </html>
-
