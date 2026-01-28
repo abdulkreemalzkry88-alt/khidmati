@@ -13,16 +13,15 @@
         :root { 
             --royal-blue: #002366; 
             --gold: #D4AF37; 
-            --white: #ffffff; 
+            --white: #ffffff;
             --glass-bg: rgba(255, 255, 255, 0.08);
             --gold-glow: rgba(212, 175, 55, 0.4);
         }
         
         body { 
             font-family: 'Tajawal', sans-serif; margin: 0; padding: 0;
-            background: radial-gradient(circle at center, #003399 0%, #001133 100%);
-            color: var(--white); min-height: 100vh; overflow-x: hidden;
-            display: flex; flex-direction: column;
+            background: radial-gradient(circle at top, var(--royal-blue), #020617);
+            color: var(--white); min-height: 100vh; overflow-x: hidden; user-select: none;
         }
 
         #splash {
@@ -34,126 +33,187 @@
         .splash-logo { font-size: 3.5rem; font-weight: 900; color: var(--gold); animation: pulse 2s infinite; }
         .loader { width: 40px; height: 40px; border: 4px solid rgba(212, 175, 55, 0.2); border-top: 4px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
+        
+        header { padding: 50px 20px 20px; text-align: center; }
+        header h1 { font-size: 2.8rem; font-weight: 900; margin: 0; color: var(--gold); text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        header p { opacity: 0.8; font-size: 1.1rem; }
+        
+        .container { width: 95%; max-width: 1200px; margin: 0 auto; padding-bottom: 100px; }
+        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px; }
+        @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
+        
+        .service-card { 
+            background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 22px 10px; 
+            text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; overflow: hidden;
+        }
+        .service-card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 24px; border: 2px solid var(--gold); opacity: 0; transition: 0.3s;
+            pointer-events: none; box-shadow: inset 0 0 15px var(--gold-glow), 0 0 15px var(--gold-glow);
+        }
+        .service-card:active { transform: scale(0.94); }
+        .service-card:active::after { opacity: 1; }
+        
+        .icon-box { width: 65px; height: 65px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; position: relative; transition: 0.3s; }
+        .service-card h3 { font-size: 0.95rem; margin: 0; font-weight: 700; color: #fff; margin-top: 10px; transition: 0.3s; }
 
-        .header { text-align: center; padding: 40px 20px; background: var(--glass-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--gold); margin-bottom: 30px; }
-        .header h1 { margin: 0; font-size: 2.5rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 15px var(--gold-glow); }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(8px); }
+        .modal-content { background: #fff; color: #333; border-radius: 30px; padding: 30px; width: 100%; max-width: 420px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes slideUp { from { transform: translateY(80px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; padding: 20px; max-width: 1200px; margin: 0 auto 100px; }
-        .card { background: var(--glass-bg); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; text-align: center; cursor: pointer; transition: 0.4s; }
-        .card:active { transform: scale(0.95); border-color: var(--gold); }
-        .card i { font-size: 2.8rem; margin-bottom: 15px; color: var(--gold); }
-
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); align-items: center; justify-content: center; }
-        .modal-content { background: #fff; color: #333; padding: 30px; border-radius: 30px; width: 90%; max-width: 450px; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 12px; border: 1px solid #ddd; font-family: 'Tajawal'; box-sizing: border-box; }
-        .btn-submit { background: #22c55e; color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; font-weight: bold; cursor: pointer; }
+        label { display: block; margin-top: 12px; font-weight: bold; font-size: 0.85rem; color: var(--royal-blue); margin-right: 5px; }
+        input, select, textarea { width: 100%; padding: 15px; margin: 6px 0 12px; border-radius: 15px; border: 1.5px solid #eee; font-family: 'Tajawal'; box-sizing: border-box; font-size: 1rem; transition: 0.3s; background: #f9f9f9; }
+        input:focus, select:focus, textarea:focus { border-color: var(--gold); outline: none; background: #fff; }
+        
+        .btn-submit { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; border: none; padding: 18px; border-radius: 15px; width: 100%; font-size: 1.1rem; font-weight: 900; cursor: pointer; transition: 0.3s; margin-top: 10px; box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3); }
+        .whatsapp-float { position: fixed; bottom: 25px; left: 25px; background: #25d366; color: white !important; border-radius: 50px; padding: 14px 28px; display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: bold; z-index: 9998; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); }
     </style>
 </head>
 <body>
     <div id="splash">
         <div class="splash-logo">خِدْماتي</div>
+        <p>البصرة الشامل</p>
         <div class="loader"></div>
     </div>
 
-    <div class="header">
-        <h1>خِدْماتي - البصرة الشامل</h1>
-        <p>جودة، أمان، وسرعة في التنفيذ</p>
+    <header>
+        <h1>خِدْماتي <span>البصرة الشامل</span></h1>
+        <p>كل ما يحتاجه منزلك في مكان واحد</p>
+    </header>
+
+    <div class="container">
+        <div class="services-grid" id="grid"></div>
     </div>
 
-    <div class="container" id="grid">
-        </div>
+    <a href="https://wa.me/9647716741488" class="whatsapp-float">
+         <i class="fab fa-whatsapp"></i> مراسلة الدعم الفني
+    </a>
 
-    <div id="masterModal" class="modal">
+    <div id="masterModal" class="modal-overlay">
         <div class="modal-content">
-            <h2 id="modal-title" style="color:var(--royal-blue); text-align:center;">طلب خدمة</h2>
-            <form id="orderForm">
+            <h2 id="stitle" style="text-align:center; color: var(--royal-blue); margin: 0 0 15px;">طلب خدمة</h2>
+            <form id="orderForm" action="https://formspree.io/f/mreqjepe" method="POST">
                 <input type="hidden" name="Service_Name" id="h-service">
                 
-                <label>النوع:</label>
-                <select name="Sub_Type" id="sub-service" required></select>
+                <label>نوع الخدمة الفرعية:</label>
+                <select name="Sub_Service" id="sub-service"></select>
                 
-                <label>المنطقة:</label>
+                <label>المنطقة في البصرة:</label>
                 <select name="Location" id="u-loc" required>
-                    <option value="">اختر المنطقة</option>
+                    <option value="">اختر منطقتك...</option>
                     <option>مركز البصرة</option><option>الزبير</option><option>شط العرب</option>
                     <option>أبي الخصيب</option><option>القرنة</option><option>الفاو</option>
                     <option>الهارثة</option><option>سفوان</option><option>المدينة</option>
                 </select>
                 
-                <label>الهاتف:</label>
-                <input type="tel" name="Phone" id="u-phone" placeholder="07XXXXXXXXX" required>
+                <label>رقم التواصل (واتساب):</label>
+                <input type="tel" name="Phone" id="u-phone" placeholder="07XXXXXXXXX" required pattern="[0-9]{11}">
                 
-                <label>ملاحظات:</label>
-                <textarea name="Notes" id="u-desc" rows="2"></textarea>
+                <label>تفاصيل الطلب:</label>
+                <textarea name="Notes" id="u-desc" rows="3" placeholder="مثلاً: العنوان بالتحديد أو نوع المشكلة..."></textarea>
                 
-                <button type="submit" id="submitBtn" class="btn-submit">إرسال الطلب</button>
+                <button type="submit" class="btn-submit" id="submitBtn">إرسال الطلب الآن 🚀</button>
+                <button type="button" onclick="closeM()" style="background:none; border:none; color:#999; width:100%; margin-top:15px; cursor:pointer; font-family:'Tajawal'; font-size: 0.9rem;">رجوع</button>
             </form>
-            <p id="status" style="text-align:center; font-weight:bold; margin-top:10px;"></p>
         </div>
     </div>
 	<script>
-        const services = [
-            { name: 'سباكة', icon: 'fa-faucet', subs: ['تأسيس مياه', 'مضخات', 'مجاري'] },
-            { name: 'كهرباء', icon: 'fa-bolt', subs: ['تأسيس', 'تصليح شورت', 'إنارة'] },
-            { name: 'تكييف', icon: 'fa-snowflake', subs: ['غسل سبلت', 'شحن غاز', 'نصب سبلت'] },
-            { name: 'نجارة', icon: 'fa-hammer', subs: ['تصليح أثاث', 'أبواب', 'تركيب'] }
+        const servicesData = [
+            { name: 'سباكة', icon: 'fa-faucet', bg: '#3b82f6', subs: ['تأسيس مياه', 'مضخات', 'مجاري', 'تصليح حنفيات'] },
+            { name: 'كهرباء', icon: 'fa-bolt-lightning', bg: '#ef4444', subs: ['تأسيس كهرباء', 'بوردات', 'إنارة', 'تصليح أجهزة'] },
+            { name: 'تكييف', icon: 'fa-wind', bg: '#06b6d4', subs: ['غسل سبلت', 'شحن غاز', 'نصب سبلت'] },
+            { name: 'أجهزة منزلية', icon: 'fa-blender', bg: '#8b5cf6', subs: ['غسالات', 'ثلاجات', 'أفران'] },
+            { name: 'نجارة', icon: 'special-wood', bg: '#f59e0b', subs: ['تصليح أثاث', 'غرف نوم', 'أبواب وشبابيك'] },
+            { name: 'حدادة', icon: 'fa-hammer', bg: '#64748b', subs: ['لحام عام', 'مظلات', 'أبواب حديد'] },
+            { name: 'كاميرات مراقبة', icon: 'fa-video', bg: '#f43f5e', subs: ['نصب منظومة', 'صيانة', 'ربط على الموبايل'] },
+            { name: 'بناء وتصميم', icon: 'fa-trowel-bricks', bg: '#78350f', subs: ['بناء هيكل', 'ترميم', 'لبخ وسيراميك'] },
+            { name: 'صيانة سيارات', icon: 'fa-car-side', bg: '#0ea5e9', subs: ['ميكانيك', 'كهرباء سيارات', 'فحص حاسبة'] },
+            { name: 'أصباغ وديكورات', icon: 'fa-paint-roller', bg: '#ec4899', subs: ['صبغ داخلي', 'ديكور ورق جدران', 'جبس بورد'] },
+            { name: 'غسيل سيارات', icon: 'fa-car', bg: '#22d3ee', subs: ['غسل متنقل', 'تلميع', 'تنظيف داخلي'] }, 
+            { name: 'نقل أثاث', icon: 'fa-truck-moving', bg: '#fb923c', subs: ['داخل البصرة', 'تفكيك وتركيب'] },
+            { name: 'حلاقة منزلية', icon: 'fa-scissors', bg: '#d946ef', subs: ['شعر ولحية', 'حلاقة أطفال'] },
+            { name: 'صيانة موبايل', icon: 'fa-mobile-screen', bg: '#6366f1', subs: ['تبديل شاشة', 'سوفتوير', 'بطارية'] },
+            { name: 'رعاية كبار السن', icon: 'fa-heart-pulse', bg: '#ef4444', subs: ['مرافق صحي', 'حقن وتضميد'] },
+            { name: 'تنظيف أثاث', icon: 'fa-couch', bg: '#a855f7', subs: ['قنفات وسجاد', 'ستائر'] },
+            { name: 'مسواق وتوصيل', icon: 'fa-cart-shopping', bg: '#22c55e', subs: ['مسواق مخضر', 'توصيل طلبات'] },
+            { name: 'صيانة مولدات', icon: 'fa-gear', bg: '#facc15', subs: ['صيانة منزلية', 'تبديل دهن', 'لف فحمات'] },
+            { name: 'حدائق واللاندسكيب', icon: 'fa-leaf', bg: '#10b981', subs: ['تنسيق حدائق', 'ثيل طبيعي/صناعي'] },
+            { name: 'دروس خصوصية', icon: 'fa-book-open', bg: '#3b82f6', subs: ['ابتدائي', 'متوسطة', 'إعدادي'] }
         ];
-
-        const grid = document.getElementById('grid');
-        services.forEach(s => {
+		const grid = document.getElementById('grid');
+        servicesData.forEach(s => {
+            let innerContent = `<i class="fa-solid ${s.icon}" style="color: white; font-size: 1.6rem;"></i>`;
+            let extra = "";
+            if(s.icon === "special-wood") {
+                innerContent = `<div style="display: flex; gap: 6px; align-items: center; justify-content: center; color: white;"><i class="fa-solid fa-hammer" style="font-size: 1.4rem;"></i><i class="fa-solid fa-saw" style="font-size: 1.4rem;"></i></div>`;
+            }
+            if(s.name === "حدادة") extra = '<div style="position:absolute; bottom:12px; width:22px; height:6px; background:rgba(255,255,255,0.4); border-radius:10px;"></div>';
+            if(s.name === "صيانة مولدات") {
+                innerContent = `<i class="fa-solid fa-gear" style="color: white; font-size: 2.2rem;"></i>`;
+                extra = '<i class="fa-solid fa-bolt" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:14px;"></i>';
+            }
             const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `<i class="fas ${s.icon}"></i><h3>${s.name}</h3>`;
-            card.onclick = () => openM(s);
+            card.className = 'service-card';
+            card.onclick = () => openM(s.name);
+            card.innerHTML = `<div class="icon-box" style="background: linear-gradient(135deg, ${s.bg}, ${s.bg}dd); box-shadow: 0 10px 20px ${s.bg}44;">${innerContent}${extra}</div><h3>${s.name}</h3>`;
             grid.appendChild(card);
         });
 
-        window.onload = () => { setTimeout(() => document.getElementById('splash').style.display = 'none', 1000); };
+        window.onload = () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 800); }, 1200); };
 
-        function openM(s) {
-            document.getElementById('modal-title').innerText = "طلب " + s.name;
-            document.getElementById('h-service').value = s.name;
-            document.getElementById('sub-service').innerHTML = s.subs.map(opt => `<option>${opt}</option>`).join('');
-            document.getElementById('masterModal').style.display = 'flex';
+        function openM(n) { 
+            const s = servicesData.find(x => x.name === n); 
+            document.getElementById('stitle').innerText = "طلب " + n; 
+            document.getElementById('h-service').value = n; 
+            document.getElementById('sub-service').innerHTML = s.subs.map(opt => `<option>${opt}</option>`).join(''); 
+            document.getElementById('masterModal').style.display = 'flex'; 
         }
 
         function closeM() { document.getElementById('masterModal').style.display = 'none'; }
+        window.onclick = function(event) { if (event.target == document.getElementById('masterModal')) closeM(); }
 
+        // البرمجة الخاصة بالإرسال المزدوج
         document.getElementById('orderForm').onsubmit = async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
-            const status = document.getElementById('status');
-            
+            btn.innerText = "جاري الحفظ والإرسال...";
             btn.disabled = true;
-            status.innerText = "جاري الإرسال...";
 
-            // إرسال البيانات لـ Formspree
+            const service = document.getElementById('h-service').value;
+            const subType = document.getElementById('sub-service').value;
+            const location = document.getElementById('u-loc').value;
+            const phone = document.getElementById('u-phone').value;
+            const notes = document.getElementById('u-desc').value || "لا توجد ملاحظات";
+
             const formData = new FormData(this);
-            
+
             try {
-                const response = await fetch("https://formspree.io/f/mreqjepe", {
+                // أولاً: الإرسال لـ Formspree (الإيميل)
+                await fetch("https://formspree.io/f/mreqjepe", {
                     method: "POST",
                     body: formData,
                     headers: { 'Accept': 'application/json' }
                 });
 
-                if (response.ok) {
-                    status.style.color = "green";
-                    status.innerText = "تم استلام طلبك في الموقع!";
-                    
-                    // فتح الواتساب (اختياري كدعم إضافي)
-                    const msg = `طلب جديد: ${document.getElementById('h-service').value}`;
-                    window.open(`https://wa.me/9647716741488?text=${encodeURIComponent(msg)}`, '_blank');
-                    
-                    setTimeout(closeM, 2000);
-                    this.reset();
-                } else {
-                    status.innerText = "خطأ في الموقع، حاول ثانية.";
-                }
+                // ثانياً: فتح الواتساب (كودك الأصلي)
+                const message = `*طلب خدمة جديد من تطبيق خدماتي*%0A%0A` +
+                                `🔧 *الخدمة:* ${service}%0A` +
+                                `📂 *النوع:* ${subType}%0A` +
+                                `📍 *المنطقة:* ${location}%0A` +
+                                `📞 *رقم الهاتف:* ${phone}%0A` +
+                                `📝 *التفاصيل:* ${notes}`;
+                
+                window.open(`https://wa.me/9647716741488?text=${message}`, '_blank');
+                
+                closeM();
+                this.reset();
             } catch (err) {
-                status.innerText = "تأكد من اتصالك بالإنترنت.";
+                alert("حدث خطأ في الإرسال، يرجى المحاولة ثانية.");
             } finally {
+                btn.innerText = "إرسال الطلب الآن 🚀";
                 btn.disabled = false;
             }
         };
